@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ExamOS</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Inter, Arial, sans-serif;
+  background: #f6f7f9;
+  color: #171717;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px;
+}
+
+.logo {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #707070;
+  margin-bottom: 28px;
+  font-size: 14px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+}
+
+.tabs {
+  display: flex;
+  background: #f0f1f3;
+  padding: 4px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+}
+
+.tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px;
+  border-radius: 7px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #666;
+}
+
+.tab.active {
+  background: white;
+  color: #111;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.form {
+  display: none;
+}
+
+.form.active {
+  display: block;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #d6d9de;
+  border-radius: 9px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.15s;
+}
+
+input:focus {
+  border-color: #111;
+}
+
+button.primary {
+  width: 100%;
+  border: none;
+  background: #111;
+  color: white;
+  padding: 13px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+button.primary:hover {
+  opacity: 0.86;
+}
+
+button.primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.status {
+  display: none;
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 9px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.status.show {
+  display: block;
+}
+
+.status.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0;
+  color: #999;
+  font-size: 12px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  height: 1px;
+  background: #e5e7eb;
+  flex: 1;
+}
+
+.info {
+  margin-top: 22px;
+  padding: 14px;
+  background: #f7f8fa;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media(max-width: 480px) {
+  .container {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="logo">
+    ExamOS
+  </div>
+
+  <div class="subtitle">
+    Your personal high-school entrance exam study system
+  </div>
+
+  <div class="card">
+
+    <div class="tabs">
+
+      <button
+        class="tab active"
+        id="loginTab"
+        onclick="showLogin()"
+      >
+        Log in
+      </button>
+
+      <button
+        class="tab"
+        id="registerTab"
+        onclick="showRegister()"
+      >
+        Create account
+      </button>
+
+    </div>
+
+
+    <!-- LOGIN -->
+
+    <form
+      id="loginForm"
+      class="form active"
+      onsubmit="login(event)"
+    >
+
+      <div class="field">
+
+        <label for="loginUsername">
+          Username
+        </label>
+
+        <input
+          id="loginUsername"
+          type="text"
+          autocomplete="username"
+          required
+          placeholder="Your username"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="loginPassword">
+          Password
+        </label>
+
+        <input
+          id="loginPassword"
+          type="password"
+          autocomplete="current-password"
+          required
+          placeholder="Your password"
+        >
+
+      </div>
+
+
+      <button
+        id="loginButton"
+        class="primary"
+        type="submit"
+      >
+        Log in
+      </button>
+
+    </form>
+
+
+    <!-- REGISTER -->
+
+    <form
+      id="registerForm"
+      class="form"
+      onsubmit="register(event)"
+    >
+
+      <div class="field">
+
+        <label for="registerUsername">
+          Username
+        </label>
+
+        <input
+          id="registerUsername"
+          type="text"
+          autocomplete="username"
+          minlength="3"
+          maxlength="20"
+          required
+          placeholder="3–20 characters"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="displayName">
+          Display name
+        </label>
+
+        <input
+          id="displayName"
+          type="text"
+          maxlength="40"
+          placeholder="What should we call you?"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="registerPassword">
+          Password
+        </label>
+
+        <input
+          id="registerPassword"
+          type="password"
+          autocomplete="new-password"
+          minlength="6"
+          required
+          placeholder="At least 6 characters"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="confirmPassword">
+          Confirm password
+        </label>
+
+        <input
+          id="confirmPassword"
+          type="password"
+          autocomplete="new-password"
+          minlength="6"
+          required
+          placeholder="Enter it again"
+        >
+
+      </div>
+
+
+      <button
+        id="registerButton"
+        class="primary"
+        type="submit"
+      >
+        Create account
+      </button>
+
+    </form>
+
+
+    <div
+      id="status"
+      class="status"
+    ></div>
+
+
+    <div class="info">
+      Your account is used to keep your study data,
+      tasks, tests and progress connected to you.
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbzHIO3PeuWZfLWxWBUIaoaTi3YRFH-3oDcjCT5l77TBiC0vT1e-WCTqxlcYzxYeJUdK/exec";
+
+
+/* =========================================================
+   API REQUEST
+========================================================= */
+
+async function api(action, data = {}) {
+
+  const response =
+    await fetch(
+      API_URL,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "text/plain;charset=utf-8"
+        },
+
+        body: JSON.stringify({
+          action: action,
+          ...data
+        })
+      }
+    );
+
+
+  const text =
+    await response.text();
+
+
+  let result;
+
+
+  try {
+
+    result =
+      JSON.parse(text);
+
+  }
+
+  catch(error) {
+
+    throw new Error(
+      "The server returned an invalid response."
+    );
+
+  }
+
+
+  return result;
+
+}
+
+
+/* =========================================================
+   CHECK EXISTING SESSION
+========================================================= */
+
+function checkExistingSession() {
+
+  const token =
+    localStorage.getItem(
+      "examToken"
+    );
+
+
+  if (token) {
+
+    window.location.href =
+      "dashboard.html";
+
+  }
+
+}
+
+
+/* =========================================================
+   SWITCH TO LOGIN
+========================================================= */
+
+function showLogin() {
+
+  document
+    .getElementById("loginForm")
+    .classList.add("active");
+
+  document
+    .getElementById("registerForm")
+    .classList.remove("active");
+
+
+  document
+    .getElementById("loginTab")
+    .classList.add("active");
+
+  document
+    .getElementById("registerTab")
+    .classList.remove("active");
+
+
+  clearStatus();
+
+}
+
+
+/* =========================================================
+   SWITCH TO REGISTER
+========================================================= */
+
+function showRegister() {
+
+  document
+    .getElementById("registerForm")
+    .classList.add("active");
+
+  document
+    .getElementById("loginForm")
+    .classList.remove("active");
+
+
+  document
+    .getElementById("registerTab")
+    .classList.add("active");
+
+  document
+    .getElementById("loginTab")
+    .classList.remove("active");
+
+
+  clearStatus();
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+async function login(event) {
+
+  event.preventDefault();
+
+
+  const username =
+    document
+      .getElementById("loginUsername")
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  const password =
+    document
+      .getElementById("loginPassword")
+      .value;
+
+
+  const button =
+    document
+      .getElementById("loginButton");
+
+
+  if (!username || !password) {
+
+    showStatus(
+      "Please enter your username and password.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "Logging in...";
+
+
+  clearStatus();
+
+
+  try {
+
+    const result =
+      await api(
+        "login",
+        {
+          username: username,
+          password: password
+        }
+      );
+
+
+    if (!result.success) {
+
+      const errors = {
+
+        INVALID_LOGIN:
+          "Incorrect username or password.",
+
+        INVALID_USERNAME:
+          "That username is invalid."
+
+      };
+
+
+      throw new Error(
+        errors[result.error] ||
+        result.error ||
+        "Login failed."
+      );
+
+    }
+
+
+    /*
+      Store ONLY the session information
+      needed by the frontend.
+    */
+
+    localStorage.setItem(
+      "examToken",
+      result.token
+    );
+
+
+    localStorage.setItem(
+      "examUsername",
+      result.username
+    );
+
+
+    localStorage.setItem(
+      "examDisplayName",
+      result.displayName ||
+      result.username
+    );
+
+
+    showStatus(
+      "Login successful. Opening your dashboard...",
+      false
+    );
+
+
+    /*
+      Small delay so the success message
+      can actually appear before navigation.
+    */
+
+    setTimeout(function() {
+
+      window.location.href =
+        "dashboard.html";
+
+    }, 350);
+
+  }
+
+  catch(error) {
+
+    showStatus(
+      error.message ||
+      "Could not connect to the server.",
+      true
+    );
+
+  }
+
+  finally {
+
+    button.disabled = false;
+
+    button.textContent =
+      "Log in";
+
+  }
+
+}
+
+
+/* =========================================================
+   REGISTER
+========================================================= */
+
+async function register(event) {
+
+  event.preventDefault();
+
+
+  const username =
+    document
+      .getElementById("registerUsername")
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  const displayName =
+    document
+      .getElementById("displayName")
+      .value
+      .trim();
+
+
+  const password =
+    document
+      .getElementById("registerPassword")
+      .value;
+
+
+  const confirmPassword =
+    document
+      .getElementById("confirmPassword")
+      .value;
+
+
+  const button =
+    document
+      .getElementById("registerButton");
+
+
+  if (password !== confirmPassword) {
+
+    showStatus(
+      "The passwords do not match.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+
+    showStatus(
+      "Username must be 3–20 characters and use only letters, numbers or underscores.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (password.length < 6) {
+
+    showStatus(
+      "Password must be at least 6 characters.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "Creating account...";
+
+
+  clearStatus();
+
+
+  try {
+
+    const result =
+      await api(
+        "createUser",
+        {
+          username: username,
+          password: password,
+          displayName:
+            displayName ||
+            username
+        }
+      );
+
+
+    if (!result.success) {
+
+      const errors = {
+
+        INVALID_USERNAME:
+          "That username is invalid.",
+
+        PASSWORD_TOO_SHORT:
+          "Password must be at least 6 characters.",
+
+        USERNAME_EXISTS:
+          "That username is already taken."
+
+      };
+
+
+      throw new Error(
+        errors[result.error] ||
+        result.error ||
+        "Could not create account."
+      );
+
+    }
+
+
+    localStorage.setItem(
+      "examToken",
+      result.token
+    );
+
+
+    localStorage.setItem(
+      "examUsername",
+      result.username
+    );
+
+
+    localStorage.setItem(
+      "examDisplayName",
+      result.displayName ||
+      result.username
+    );
+
+
+    showStatus(
+      "Account created. Opening your dashboard...",
+      false
+    );
+
+
+    setTimeout(function() {
+
+      window.location.href =
+        "dashboard.html";
+
+    }, 350);
+
+  }
+
+  catch(error) {
+
+    showStatus(
+      error.message ||
+      "Could not create your account.",
+      true
+    );
+
+  }
+
+  finally {
+
+    button.disabled = false;
+
+    button.textContent =
+      "Create account";
+
+  }
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function showStatus(
+  message,
+  error = false
+) {
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+
+  status.textContent =
+    message;
+
+
+  status.className =
+    "status show " +
+    (
+      error
+        ? "error"
+        : "success"
+    );
+
+}
+
+
+function clearStatus() {
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+
+  status.textContent =
+    "";
+
+
+  status.className =
+    "status";
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+checkExistingSession();
+
+</script>
+
+</body>
+</html>
