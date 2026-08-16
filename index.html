@@ -40,7 +40,7 @@ body {
 .subtitle {
   text-align: center;
   color: #707070;
-  margin-bottom: 28px;
+  margin-bottom: 22px;
   font-size: 14px;
   line-height: 1.5;
 }
@@ -51,6 +51,27 @@ body {
   border-radius: 18px;
   padding: 28px;
   box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+}
+
+.language-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.language-row label {
+  margin: 0;
+  font-size: 12px;
+  color: #777;
+}
+
+.language-select {
+  width: auto;
+  padding: 6px 9px;
+  font-size: 12px;
+  border-radius: 8px;
 }
 
 .tabs {
@@ -106,7 +127,6 @@ select {
   font-size: 15px;
   outline: none;
   background: white;
-  transition: border 0.15s;
 }
 
 input:focus,
@@ -128,11 +148,12 @@ button.primary {
 }
 
 button.primary:hover {
-  opacity: 0.86;
+  opacity: .86;
 }
 
-button.primary:disabled {
-  opacity: 0.5;
+button.primary:disabled,
+.google-button:disabled {
+  opacity: .5;
   cursor: not-allowed;
 }
 
@@ -150,11 +171,6 @@ button.primary:disabled {
 
 .google-button:hover {
   background: #f7f7f7;
-}
-
-.google-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 .divider {
@@ -197,27 +213,6 @@ button.primary:disabled {
   color: #991b1b;
 }
 
-.language-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.language-row label {
-  margin: 0;
-  font-size: 12px;
-  color: #777;
-}
-
-.language-select {
-  width: auto;
-  padding: 6px 9px;
-  font-size: 12px;
-  border-radius: 8px;
-}
-
 .info {
   margin-top: 22px;
   padding: 14px;
@@ -229,11 +224,7 @@ button.primary:disabled {
   text-align: center;
 }
 
-.hidden {
-  display: none !important;
-}
-
-@media(max-width: 480px) {
+@media(max-width:480px) {
   .container {
     padding: 16px;
   }
@@ -249,25 +240,29 @@ button.primary:disabled {
 
 <div class="container">
 
-  <div class="logo">
-    Tempo
-  </div>
+  <div class="logo">Tempo</div>
 
   <div class="subtitle" id="subtitle">
     Your personal study and exam planning system
   </div>
 
   <div class="language-row">
-    <label for="languageSelect" id="languageLabel">Language</label>
+
+    <label
+      for="languageSelect"
+      id="languageLabel"
+    >
+      Language
+    </label>
 
     <select
       id="languageSelect"
       class="language-select"
-      onchange="changeLanguage()"
     >
       <option value="en">English</option>
       <option value="ja">日本語</option>
     </select>
+
   </div>
 
   <div class="card">
@@ -277,7 +272,7 @@ button.primary:disabled {
       <button
         class="tab active"
         id="loginTab"
-        onclick="showLogin()"
+        type="button"
       >
         Log in
       </button>
@@ -285,24 +280,27 @@ button.primary:disabled {
       <button
         class="tab"
         id="registerTab"
-        onclick="showRegister()"
+        type="button"
       >
         Create account
       </button>
 
     </div>
 
+
     <!-- LOGIN -->
 
     <form
       id="loginForm"
       class="form active"
-      onsubmit="login(event)"
     >
 
       <div class="field">
 
-        <label for="loginUsername" id="loginUsernameLabel">
+        <label
+          for="loginUsername"
+          id="loginUsernameLabel"
+        >
           Username
         </label>
 
@@ -318,7 +316,10 @@ button.primary:disabled {
 
       <div class="field">
 
-        <label for="loginPassword" id="loginPasswordLabel">
+        <label
+          for="loginPassword"
+          id="loginPasswordLabel"
+        >
           Password
         </label>
 
@@ -342,26 +343,29 @@ button.primary:disabled {
 
     </form>
 
+
     <!-- REGISTER -->
 
     <form
       id="registerForm"
       class="form"
-      onsubmit="register(event)"
     >
 
       <div class="field">
 
-        <label for="registerUsername" id="registerUsernameLabel">
+        <label
+          for="registerUsername"
+          id="registerUsernameLabel"
+        >
           Username
         </label>
 
         <input
           id="registerUsername"
           type="text"
-          autocomplete="username"
           minlength="3"
           maxlength="20"
+          autocomplete="username"
           required
           placeholder="3–20 characters"
         >
@@ -370,7 +374,10 @@ button.primary:disabled {
 
       <div class="field">
 
-        <label for="displayName" id="displayNameLabel">
+        <label
+          for="displayName"
+          id="displayNameLabel"
+        >
           Display name
         </label>
 
@@ -385,15 +392,18 @@ button.primary:disabled {
 
       <div class="field">
 
-        <label for="registerPassword" id="registerPasswordLabel">
+        <label
+          for="registerPassword"
+          id="registerPasswordLabel"
+        >
           Password
         </label>
 
         <input
           id="registerPassword"
           type="password"
-          autocomplete="new-password"
           minlength="6"
+          autocomplete="new-password"
           required
           placeholder="At least 6 characters"
         >
@@ -402,15 +412,18 @@ button.primary:disabled {
 
       <div class="field">
 
-        <label for="confirmPassword" id="confirmPasswordLabel">
+        <label
+          for="confirmPassword"
+          id="confirmPasswordLabel"
+        >
           Confirm password
         </label>
 
         <input
           id="confirmPassword"
           type="password"
-          autocomplete="new-password"
           minlength="6"
+          autocomplete="new-password"
           required
           placeholder="Enter it again"
         >
@@ -427,7 +440,8 @@ button.primary:disabled {
 
     </form>
 
-    <!-- GOOGLE LOGIN -->
+
+    <!-- GOOGLE -->
 
     <div id="googleSection">
 
@@ -439,25 +453,30 @@ button.primary:disabled {
         id="googleButton"
         class="google-button"
         type="button"
-        onclick="googleLogin()"
       >
         Continue with Google
       </button>
 
     </div>
 
+
     <div
       id="status"
       class="status"
     ></div>
 
-    <div class="info" id="infoText">
+
+    <div
+      class="info"
+      id="infoText"
+    >
       Your account keeps your tasks, tests, study sessions and exam progress connected to you.
     </div>
 
   </div>
 
 </div>
+
 
 <script>
 
@@ -467,19 +486,6 @@ button.primary:disabled {
 
 const API_URL =
   "https://script.google.com/macros/s/AKfycbzHIO3PeuWZfLWxWBUIaoaTi3YRFH-3oDcjCT5l77TBiC0vT1e-WCTqxlcYzxYeJUdK/exec";
-
-/*
-  IMPORTANT:
-  Put your Google OAuth Client ID here if you want
-  the Google login button to work.
-
-  Example:
-  const GOOGLE_CLIENT_ID =
-    "1234567890-example.apps.googleusercontent.com";
-
-  If it is left blank, the normal username/password
-  login still works.
-*/
 
 const GOOGLE_CLIENT_ID = "";
 
@@ -491,6 +497,7 @@ const GOOGLE_CLIENT_ID = "";
 const translations = {
 
   en: {
+
     subtitle:
       "Your personal study and exam planning system",
 
@@ -575,6 +582,9 @@ const translations = {
     connectionError:
       "Could not connect to the server.",
 
+    invalidResponse:
+      "The server returned an invalid response.",
+
     accountError:
       "Could not create your account.",
 
@@ -582,13 +592,13 @@ const translations = {
       "Google login is not configured yet.",
 
     googleError:
-      "Google login failed.",
+      "Google login failed."
 
-    invalidResponse:
-      "The server returned an invalid response."
   },
 
+
   ja: {
+
     subtitle:
       "高校受験のための学習・計画システム",
 
@@ -673,6 +683,9 @@ const translations = {
     connectionError:
       "サーバーに接続できませんでした。",
 
+    invalidResponse:
+      "サーバーから正しい応答が返されませんでした。",
+
     accountError:
       "アカウントを作成できませんでした。",
 
@@ -680,18 +693,12 @@ const translations = {
       "Googleログインがまだ設定されていません。",
 
     googleError:
-      "Googleログインに失敗しました。",
+      "Googleログインに失敗しました。"
 
-    invalidResponse:
-      "サーバーから正しい応答が返されませんでした。"
   }
 
 };
 
-
-/* =========================================================
-   LANGUAGE
-========================================================= */
 
 let currentLanguage =
   localStorage.getItem("tempoLanguage") || "en";
@@ -709,27 +716,27 @@ function t(key) {
 }
 
 
-function changeLanguage() {
-
-  currentLanguage =
-    document
-      .getElementById("languageSelect")
-      .value;
-
-  localStorage.setItem(
-    "tempoLanguage",
-    currentLanguage
-  );
-
-  applyLanguage();
-
-}
-
+/* =========================================================
+   UI
+========================================================= */
 
 function applyLanguage() {
 
   document.documentElement.lang =
     currentLanguage;
+
+  const ids = {
+
+    subtitle: "subtitle",
+    language: "languageLabel",
+    login: "loginTab",
+    register: "registerTab",
+    username: "loginUsernameLabel",
+    password: "loginPasswordLabel",
+    displayName: "displayNameLabel",
+    confirmPassword: "confirmPasswordLabel"
+
+  };
 
   document.getElementById("subtitle").textContent =
     t("subtitle");
@@ -797,160 +804,41 @@ function applyLanguage() {
 }
 
 
-/* =========================================================
-   API
-========================================================= */
+document
+  .getElementById("languageSelect")
+  .addEventListener(
+    "change",
+    function() {
 
-async function api(action, data = {}) {
+      currentLanguage =
+        this.value;
 
-  let response;
-
-  try {
-
-    response =
-      await fetch(
-        API_URL,
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "text/plain;charset=utf-8"
-          },
-
-          body: JSON.stringify({
-            action: action,
-            ...data
-          })
-        }
+      localStorage.setItem(
+        "tempoLanguage",
+        currentLanguage
       );
 
-  } catch (error) {
+      applyLanguage();
 
-    throw new Error(
-      t("connectionError")
-    );
-
-  }
-
-
-  const text =
-    await response.text();
-
-
-  let result;
-
-  try {
-
-    result =
-      JSON.parse(text);
-
-  } catch (error) {
-
-    throw new Error(
-      t("invalidResponse")
-    );
-
-  }
-
-
-  return result;
-
-}
-
-
-/* =========================================================
-   SESSION
-========================================================= */
-
-function saveSession(result) {
-
-  if (!result || !result.token) {
-    throw new Error(
-      t("invalidResponse")
-    );
-  }
-
-  localStorage.setItem(
-    "tempoToken",
-    result.token
+    }
   );
 
-  /*
-    Keep the old key too so existing
-    Tempo/ExamOS pages don't suddenly
-    forget the user's session.
-  */
 
-  localStorage.setItem(
-    "examToken",
-    result.token
+document
+  .getElementById("loginTab")
+  .addEventListener(
+    "click",
+    showLogin
   );
 
-  if (result.username) {
 
-    localStorage.setItem(
-      "tempoUsername",
-      result.username
-    );
+document
+  .getElementById("registerTab")
+  .addEventListener(
+    "click",
+    showRegister
+  );
 
-    localStorage.setItem(
-      "examUsername",
-      result.username
-    );
-
-  }
-
-  const displayName =
-    result.displayName ||
-    result.username ||
-    "";
-
-  if (displayName) {
-
-    localStorage.setItem(
-      "tempoDisplayName",
-      displayName
-    );
-
-    localStorage.setItem(
-      "examDisplayName",
-      displayName
-    );
-
-  }
-
-  if (result.email) {
-
-    localStorage.setItem(
-      "tempoEmail",
-      result.email
-    );
-
-  }
-
-}
-
-
-function checkExistingSession() {
-
-  const token =
-    localStorage.getItem("tempoToken") ||
-    localStorage.getItem("examToken");
-
-  if (token) {
-
-    window.location.href =
-      "dashboard.html";
-
-  }
-
-}
-
-
-/* =========================================================
-   TABS
-========================================================= */
 
 function showLogin() {
 
@@ -999,12 +887,278 @@ function showRegister() {
 
 
 /* =========================================================
+   API
+========================================================= */
+
+async function api(
+  action,
+  data = {}
+) {
+
+  let response;
+
+  try {
+
+    response =
+      await fetch(
+        API_URL,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+
+          body:
+            JSON.stringify({
+              action,
+              ...data
+            })
+        }
+      );
+
+  } catch (error) {
+
+    throw new Error(
+      t("connectionError")
+    );
+
+  }
+
+
+  const text =
+    await response.text();
+
+
+  if (!text) {
+
+    throw new Error(
+      t("invalidResponse")
+    );
+
+  }
+
+
+  let result;
+
+  try {
+
+    result =
+      JSON.parse(text);
+
+  } catch (error) {
+
+    console.error(
+      "Tempo API returned:",
+      text
+    );
+
+    throw new Error(
+      t("invalidResponse")
+    );
+
+  }
+
+
+  console.log(
+    "Tempo API:",
+    action,
+    result
+  );
+
+
+  return result;
+
+}
+
+
+/* =========================================================
+   SESSION
+========================================================= */
+
+function cleanToken(token) {
+
+  token =
+    String(token || "").trim();
+
+  if (
+    !token ||
+    token === "null" ||
+    token === "undefined"
+  ) {
+
+    return "";
+
+  }
+
+  return token;
+
+}
+
+
+function getToken() {
+
+  return cleanToken(
+    localStorage.getItem(
+      "tempoToken"
+    )
+  );
+
+}
+
+
+function saveSession(result) {
+
+  if (
+    !result ||
+    !result.token
+  ) {
+
+    console.error(
+      "Invalid login response:",
+      result
+    );
+
+    throw new Error(
+      t("invalidResponse")
+    );
+
+  }
+
+
+  const token =
+    cleanToken(
+      result.token
+    );
+
+
+  if (!token) {
+
+    throw new Error(
+      t("invalidResponse")
+    );
+
+  }
+
+
+  localStorage.setItem(
+    "tempoToken",
+    token
+  );
+
+  localStorage.setItem(
+    "examToken",
+    token
+  );
+
+
+  if (result.userId) {
+
+    localStorage.setItem(
+      "tempoUserId",
+      String(result.userId)
+    );
+
+  }
+
+
+  if (result.username) {
+
+    localStorage.setItem(
+      "tempoUsername",
+      String(result.username)
+    );
+
+    localStorage.setItem(
+      "examUsername",
+      String(result.username)
+    );
+
+  }
+
+
+  if (result.displayName) {
+
+    localStorage.setItem(
+      "tempoDisplayName",
+      String(result.displayName)
+    );
+
+    localStorage.setItem(
+      "examDisplayName",
+      String(result.displayName)
+    );
+
+  }
+
+
+  if (result.email) {
+
+    localStorage.setItem(
+      "tempoEmail",
+      String(result.email)
+    );
+
+  }
+
+
+  if (
+    result.language === "ja" ||
+    result.language === "en"
+  ) {
+
+    currentLanguage =
+      result.language;
+
+    localStorage.setItem(
+      "tempoLanguage",
+      currentLanguage
+    );
+
+  }
+
+}
+
+
+function clearSession() {
+
+  [
+    "tempoToken",
+    "examToken",
+    "tempoUserId",
+    "tempoUsername",
+    "examUsername",
+    "tempoDisplayName",
+    "examDisplayName",
+    "tempoEmail"
+  ].forEach(function(key) {
+
+    localStorage.removeItem(key);
+
+  });
+
+}
+
+
+/* =========================================================
    LOGIN
 ========================================================= */
+
+document
+  .getElementById("loginForm")
+  .addEventListener(
+    "submit",
+    login
+  );
+
 
 async function login(event) {
 
   event.preventDefault();
+
+  clearStatus();
+
 
   const username =
     document
@@ -1013,14 +1167,18 @@ async function login(event) {
       .trim()
       .toLowerCase();
 
+
   const password =
     document
       .getElementById("loginPassword")
       .value;
 
+
   const button =
-    document
-      .getElementById("loginButton");
+    document.getElementById(
+      "loginButton"
+    );
+
 
   if (!username || !password) {
 
@@ -1033,12 +1191,12 @@ async function login(event) {
 
   }
 
+
   button.disabled = true;
 
   button.textContent =
     t("loggingIn");
 
-  clearStatus();
 
   try {
 
@@ -1046,52 +1204,76 @@ async function login(event) {
       await api(
         "login",
         {
-          username:
-            username,
-
-          password:
-            password
+          username,
+          password
         }
       );
 
-    if (!result.success) {
 
-      const errors = {
-
-        INVALID_LOGIN:
-          t("invalidLogin"),
-
-        INVALID_USERNAME:
-          t("invalidUsername")
-
-      };
+    if (
+      !result ||
+      result.success !== true
+    ) {
 
       throw new Error(
-        errors[result.error] ||
-        result.error ||
         t("invalidLogin")
       );
 
     }
 
+
+    if (!result.token) {
+
+      console.error(
+        "Server login response has no token:",
+        result
+      );
+
+      throw new Error(
+        t("invalidResponse")
+      );
+
+    }
+
+
     saveSession(result);
+
+
+    const token =
+      getToken();
+
+
+    if (!token) {
+
+      throw new Error(
+        t("invalidResponse")
+      );
+
+    }
+
 
     showStatus(
       t("loginSuccess"),
       false
     );
 
-    setTimeout(
-      function() {
-        window.location.href =
-          "dashboard.html";
-      },
-      350
-    );
+
+    setTimeout(function() {
+
+      window.location.replace(
+        "dashboard.html"
+      );
+
+    }, 300);
 
   }
 
   catch(error) {
+
+    console.error(
+      "Login error:",
+      error
+    );
 
     showStatus(
       error.message ||
@@ -1117,9 +1299,20 @@ async function login(event) {
    REGISTER
 ========================================================= */
 
+document
+  .getElementById("registerForm")
+  .addEventListener(
+    "submit",
+    register
+  );
+
+
 async function register(event) {
 
   event.preventDefault();
+
+  clearStatus();
+
 
   const username =
     document
@@ -1128,36 +1321,31 @@ async function register(event) {
       .trim()
       .toLowerCase();
 
+
   const displayName =
     document
       .getElementById("displayName")
       .value
       .trim();
 
+
   const password =
     document
       .getElementById("registerPassword")
       .value;
+
 
   const confirmPassword =
     document
       .getElementById("confirmPassword")
       .value;
 
+
   const button =
-    document
-      .getElementById("registerButton");
-
-  if (password !== confirmPassword) {
-
-    showStatus(
-      t("passwordMismatch"),
-      true
+    document.getElementById(
+      "registerButton"
     );
 
-    return;
-
-  }
 
   if (
     !/^[a-zA-Z0-9_]{3,20}$/.test(
@@ -1174,7 +1362,10 @@ async function register(event) {
 
   }
 
-  if (password.length < 6) {
+
+  if (
+    password.length < 6
+  ) {
 
     showStatus(
       t("passwordShort"),
@@ -1185,12 +1376,26 @@ async function register(event) {
 
   }
 
+
+  if (
+    password !== confirmPassword
+  ) {
+
+    showStatus(
+      t("passwordMismatch"),
+      true
+    );
+
+    return;
+
+  }
+
+
   button.disabled = true;
 
   button.textContent =
     t("creating");
 
-  clearStatus();
 
   try {
 
@@ -1198,91 +1403,75 @@ async function register(event) {
       await api(
         "createUser",
         {
-          username:
-            username,
-
-          password:
-            password,
-
+          username,
+          password,
           displayName:
             displayName ||
-            username
-        }
-      );
-
-    if (!result.success) {
-
-      const errors = {
-
-        INVALID_USERNAME:
-          t("invalidUsername"),
-
-        PASSWORD_TOO_SHORT:
-          t("passwordShort"),
-
-        USERNAME_EXISTS:
-          t("usernameTaken")
-
-      };
-
-      throw new Error(
-        errors[result.error] ||
-        result.error ||
-        t("accountError")
-      );
-
-    }
-
-    saveSession(result);
-
-    /*
-      Save the selected language
-      to the backend as well.
-    */
-
-    try {
-
-      await api(
-        "setLanguage",
-        {
-          token:
-            result.token,
-
+            username,
           language:
             currentLanguage
         }
       );
 
-    } catch (languageError) {
 
-      /*
-        Account creation still succeeded.
-        Language sync should never break login.
-      */
+    if (
+      !result ||
+      result.success !== true
+    ) {
 
-      console.warn(
-        "Could not save language preference:",
-        languageError
+      if (
+        result &&
+        result.error ===
+        "USERNAME_EXISTS"
+      ) {
+
+        throw new Error(
+          t("usernameTaken")
+        );
+
+      }
+
+      throw new Error(
+        t("accountError")
       );
 
     }
+
+
+    if (!result.token) {
+
+      throw new Error(
+        t("invalidResponse")
+      );
+
+    }
+
+
+    saveSession(result);
+
 
     showStatus(
       t("accountCreated"),
       false
     );
 
-    setTimeout(
-      function() {
-        window.location.href =
-          "dashboard.html";
-      },
-      350
-    );
+
+    setTimeout(function() {
+
+      window.location.replace(
+        "dashboard.html"
+      );
+
+    }, 300);
 
   }
 
   catch(error) {
+
+    console.error(
+      "Registration error:",
+      error
+    );
 
     showStatus(
       error.message ||
@@ -1305,8 +1494,16 @@ async function register(event) {
 
 
 /* =========================================================
-   GOOGLE LOGIN
+   GOOGLE
 ========================================================= */
+
+document
+  .getElementById("googleButton")
+  .addEventListener(
+    "click",
+    googleLogin
+  );
+
 
 function googleLogin() {
 
@@ -1318,253 +1515,6 @@ function googleLogin() {
     );
 
     return;
-
-  }
-
-  /*
-    Google Identity Services is loaded
-    dynamically only when Google login
-    is actually configured.
-  */
-
-  if (
-    typeof google === "undefined" ||
-    !google.accounts ||
-    !google.accounts.id
-  ) {
-
-    loadGoogleIdentity();
-
-    showStatus(
-      currentLanguage === "ja"
-        ? "Googleログインを読み込んでいます。もう一度お試しください。"
-        : "Loading Google login. Please try again.",
-      false
-    );
-
-    return;
-
-  }
-
-  startGoogleLogin();
-
-}
-
-
-function loadGoogleIdentity() {
-
-  if (
-    document.getElementById(
-      "googleIdentityScript"
-    )
-  ) {
-
-    return;
-
-  }
-
-  const script =
-    document.createElement("script");
-
-  script.id =
-    "googleIdentityScript";
-
-  script.src =
-    "https://accounts.google.com/gsi/client";
-
-  script.async = true;
-
-  script.defer = true;
-
-  script.onload =
-    function() {
-
-      startGoogleLogin();
-
-    };
-
-  script.onerror =
-    function() {
-
-      showStatus(
-        t("googleError"),
-        true
-      );
-
-    };
-
-  document.head.appendChild(
-    script
-  );
-
-}
-
-
-function startGoogleLogin() {
-
-  if (
-    typeof google === "undefined" ||
-    !google.accounts ||
-    !google.accounts.id
-  ) {
-
-    showStatus(
-      t("googleError"),
-      true
-    );
-
-    return;
-
-  }
-
-  google.accounts.id.initialize({
-
-    client_id:
-      GOOGLE_CLIENT_ID,
-
-    callback:
-      handleGoogleCredential
-
-  });
-
-  google.accounts.id.prompt();
-
-}
-
-
-async function handleGoogleCredential(response) {
-
-  if (
-    !response ||
-    !response.credential
-  ) {
-
-    showStatus(
-      t("googleError"),
-      true
-    );
-
-    return;
-
-  }
-
-  const button =
-    document.getElementById(
-      "googleButton"
-    );
-
-  button.disabled = true;
-
-  button.textContent =
-    currentLanguage === "ja"
-      ? "Googleでログイン中..."
-      : "Signing in with Google...";
-
-  clearStatus();
-
-  try {
-
-    const result =
-      await api(
-        "googleLogin",
-        {
-          idToken:
-            response.credential
-        }
-      );
-
-    if (!result.success) {
-
-      const errors = {
-
-        MISSING_GOOGLE_TOKEN:
-          t("googleError"),
-
-        INVALID_GOOGLE_TOKEN:
-          t("googleError"),
-
-        INVALID_GOOGLE_ISSUER:
-          t("googleError"),
-
-        GOOGLE_CLIENT_MISMATCH:
-          t("googleError"),
-
-        GOOGLE_EMAIL_NOT_VERIFIED:
-          t("googleError"),
-
-        GOOGLE_LOGIN_ERROR:
-          t("googleError")
-
-      };
-
-      throw new Error(
-        errors[result.error] ||
-        result.error ||
-        t("googleError")
-      );
-
-    }
-
-    saveSession(result);
-
-    /*
-      New Google users get the current
-      language preference saved too.
-    */
-
-    try {
-
-      await api(
-        "setLanguage",
-        {
-          token:
-            result.token,
-
-          language:
-            currentLanguage
-        }
-      );
-
-    } catch (languageError) {
-
-      console.warn(
-        "Could not save Google language preference:",
-        languageError
-      );
-
-    }
-
-    showStatus(
-      t("loginSuccess"),
-      false
-    );
-
-    setTimeout(
-      function() {
-        window.location.href =
-          "dashboard.html";
-      },
-      350
-    );
-
-  }
-
-  catch(error) {
-
-    showStatus(
-      error.message ||
-      t("googleError"),
-      true
-    );
-
-  }
-
-  finally {
-
-    button.disabled = false;
-
-    button.textContent =
-      t("google");
 
   }
 
@@ -1585,8 +1535,10 @@ function showStatus(
       "status"
     );
 
+
   status.textContent =
     message;
+
 
   status.className =
     "status show " +
@@ -1606,8 +1558,10 @@ function clearStatus() {
       "status"
     );
 
+
   status.textContent =
     "";
+
 
   status.className =
     "status";
@@ -1616,7 +1570,7 @@ function clearStatus() {
 
 
 /* =========================================================
-   INITIALIZATION
+   STARTUP
 ========================================================= */
 
 document
@@ -1626,7 +1580,23 @@ document
 
 applyLanguage();
 
-checkExistingSession();
+
+/*
+ * We intentionally DO NOT redirect just because
+ * localStorage contains a token.
+ *
+ * This prevents stale/broken tokens from trapping
+ * the user in an index/dashboard redirect loop.
+ */
+
+console.log(
+  "Tempo initialized."
+);
+
+console.log(
+  "Stored token:",
+  getToken()
+);
 
 </script>
 
