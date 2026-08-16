@@ -1,10 +1,11 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ExamOS</title>
+<title>Tempo</title>
 
 <style>
 * {
@@ -31,9 +32,9 @@ body {
 
 .logo {
   text-align: center;
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 800;
-  letter-spacing: -1px;
+  letter-spacing: -1.5px;
   margin-bottom: 8px;
 }
 
@@ -42,6 +43,7 @@ body {
   color: #707070;
   margin-bottom: 28px;
   font-size: 14px;
+  line-height: 1.5;
 }
 
 .card {
@@ -96,17 +98,20 @@ label {
   margin-bottom: 7px;
 }
 
-input {
+input,
+select {
   width: 100%;
   padding: 12px 13px;
   border: 1px solid #d6d9de;
   border-radius: 9px;
   font-size: 15px;
   outline: none;
+  background: white;
   transition: border 0.15s;
 }
 
-input:focus {
+input:focus,
+select:focus {
   border-color: #111;
 }
 
@@ -132,6 +137,44 @@ button.primary:disabled {
   cursor: not-allowed;
 }
 
+.google-button {
+  width: 100%;
+  border: 1px solid #d6d9de;
+  background: white;
+  color: #171717;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.google-button:hover {
+  background: #f7f7f7;
+}
+
+.google-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0;
+  color: #999;
+  font-size: 12px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  height: 1px;
+  background: #e5e7eb;
+  flex: 1;
+}
+
 .status {
   display: none;
   margin-top: 16px;
@@ -155,21 +198,25 @@ button.primary:disabled {
   color: #991b1b;
 }
 
-.divider {
+.language-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 22px 0;
-  color: #999;
-  font-size: 12px;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
-.divider::before,
-.divider::after {
-  content: "";
-  height: 1px;
-  background: #e5e7eb;
-  flex: 1;
+.language-row label {
+  margin: 0;
+  font-size: 12px;
+  color: #777;
+}
+
+.language-select {
+  width: auto;
+  padding: 6px 9px;
+  font-size: 12px;
+  border-radius: 8px;
 }
 
 .info {
@@ -181,6 +228,10 @@ button.primary:disabled {
   color: #666;
   line-height: 1.5;
   text-align: center;
+}
+
+.hidden {
+  display: none !important;
 }
 
 @media(max-width: 480px) {
@@ -200,11 +251,24 @@ button.primary:disabled {
 <div class="container">
 
   <div class="logo">
-    ExamOS
+    Tempo
   </div>
 
-  <div class="subtitle">
-    Your personal high-school entrance exam study system
+  <div class="subtitle" id="subtitle">
+    Your personal study and exam planning system
+  </div>
+
+  <div class="language-row">
+    <label for="languageSelect" id="languageLabel">Language</label>
+
+    <select
+      id="languageSelect"
+      class="language-select"
+      onchange="changeLanguage()"
+    >
+      <option value="en">English</option>
+      <option value="ja">日本語</option>
+    </select>
   </div>
 
   <div class="card">
@@ -229,7 +293,6 @@ button.primary:disabled {
 
     </div>
 
-
     <!-- LOGIN -->
 
     <form
@@ -240,7 +303,7 @@ button.primary:disabled {
 
       <div class="field">
 
-        <label for="loginUsername">
+        <label for="loginUsername" id="loginUsernameLabel">
           Username
         </label>
 
@@ -254,10 +317,9 @@ button.primary:disabled {
 
       </div>
 
-
       <div class="field">
 
-        <label for="loginPassword">
+        <label for="loginPassword" id="loginPasswordLabel">
           Password
         </label>
 
@@ -271,7 +333,6 @@ button.primary:disabled {
 
       </div>
 
-
       <button
         id="loginButton"
         class="primary"
@@ -281,7 +342,6 @@ button.primary:disabled {
       </button>
 
     </form>
-
 
     <!-- REGISTER -->
 
@@ -293,7 +353,7 @@ button.primary:disabled {
 
       <div class="field">
 
-        <label for="registerUsername">
+        <label for="registerUsername" id="registerUsernameLabel">
           Username
         </label>
 
@@ -309,10 +369,9 @@ button.primary:disabled {
 
       </div>
 
-
       <div class="field">
 
-        <label for="displayName">
+        <label for="displayName" id="displayNameLabel">
           Display name
         </label>
 
@@ -325,10 +384,9 @@ button.primary:disabled {
 
       </div>
 
-
       <div class="field">
 
-        <label for="registerPassword">
+        <label for="registerPassword" id="registerPasswordLabel">
           Password
         </label>
 
@@ -343,10 +401,9 @@ button.primary:disabled {
 
       </div>
 
-
       <div class="field">
 
-        <label for="confirmPassword">
+        <label for="confirmPassword" id="confirmPasswordLabel">
           Confirm password
         </label>
 
@@ -361,7 +418,6 @@ button.primary:disabled {
 
       </div>
 
-
       <button
         id="registerButton"
         class="primary"
@@ -372,22 +428,37 @@ button.primary:disabled {
 
     </form>
 
+    <!-- GOOGLE LOGIN -->
+
+    <div id="googleSection">
+
+      <div class="divider">
+        <span id="orText">OR</span>
+      </div>
+
+      <button
+        id="googleButton"
+        class="google-button"
+        type="button"
+        onclick="googleLogin()"
+      >
+        Continue with Google
+      </button>
+
+    </div>
 
     <div
       id="status"
       class="status"
     ></div>
 
-
-    <div class="info">
-      Your account is used to keep your study data,
-      tasks, tests and progress connected to you.
+    <div class="info" id="infoText">
+      Your account keeps your tasks, tests, study sessions and exam progress connected to you.
     </div>
 
   </div>
 
 </div>
-
 
 <script>
 
@@ -398,30 +469,370 @@ button.primary:disabled {
 const API_URL =
   "https://script.google.com/macros/s/AKfycbzHIO3PeuWZfLWxWBUIaoaTi3YRFH-3oDcjCT5l77TBiC0vT1e-WCTqxlcYzxYeJUdK/exec";
 
+/*
+  IMPORTANT:
+  Put your Google OAuth Client ID here if you want
+  the Google login button to work.
+
+  Example:
+  const GOOGLE_CLIENT_ID =
+    "1234567890-example.apps.googleusercontent.com";
+
+  If it is left blank, the normal username/password
+  login still works.
+*/
+
+const GOOGLE_CLIENT_ID = "";
+
 
 /* =========================================================
-   API REQUEST
+   TRANSLATIONS
+========================================================= */
+
+const translations = {
+
+  en: {
+    subtitle:
+      "Your personal study and exam planning system",
+
+    language:
+      "Language",
+
+    login:
+      "Log in",
+
+    register:
+      "Create account",
+
+    username:
+      "Username",
+
+    displayName:
+      "Display name",
+
+    password:
+      "Password",
+
+    confirmPassword:
+      "Confirm password",
+
+    usernamePlaceholder:
+      "Your username",
+
+    usernameRegisterPlaceholder:
+      "3–20 characters",
+
+    displayNamePlaceholder:
+      "What should we call you?",
+
+    passwordPlaceholder:
+      "At least 6 characters",
+
+    confirmPasswordPlaceholder:
+      "Enter it again",
+
+    loginButton:
+      "Log in",
+
+    registerButton:
+      "Create account",
+
+    loggingIn:
+      "Logging in...",
+
+    creating:
+      "Creating account...",
+
+    google:
+      "Continue with Google",
+
+    or:
+      "OR",
+
+    info:
+      "Your account keeps your tasks, tests, study sessions and exam progress connected to you.",
+
+    passwordMismatch:
+      "The passwords do not match.",
+
+    invalidUsername:
+      "Username must be 3–20 characters and use only letters, numbers or underscores.",
+
+    passwordShort:
+      "Password must be at least 6 characters.",
+
+    invalidLogin:
+      "Incorrect username or password.",
+
+    usernameTaken:
+      "That username is already taken.",
+
+    accountCreated:
+      "Account created. Opening your dashboard...",
+
+    loginSuccess:
+      "Login successful. Opening your dashboard...",
+
+    connectionError:
+      "Could not connect to the server.",
+
+    accountError:
+      "Could not create your account.",
+
+    googleNotConfigured:
+      "Google login is not configured yet.",
+
+    googleError:
+      "Google login failed.",
+
+    invalidResponse:
+      "The server returned an invalid response."
+  },
+
+  ja: {
+    subtitle:
+      "高校受験のための学習・計画システム",
+
+    language:
+      "言語",
+
+    login:
+      "ログイン",
+
+    register:
+      "アカウント作成",
+
+    username:
+      "ユーザー名",
+
+    displayName:
+      "表示名",
+
+    password:
+      "パスワード",
+
+    confirmPassword:
+      "パスワード確認",
+
+    usernamePlaceholder:
+      "ユーザー名を入力",
+
+    usernameRegisterPlaceholder:
+      "3〜20文字",
+
+    displayNamePlaceholder:
+      "表示する名前",
+
+    passwordPlaceholder:
+      "6文字以上",
+
+    confirmPasswordPlaceholder:
+      "もう一度入力",
+
+    loginButton:
+      "ログイン",
+
+    registerButton:
+      "アカウントを作成",
+
+    loggingIn:
+      "ログイン中...",
+
+    creating:
+      "アカウントを作成中...",
+
+    google:
+      "Googleで続ける",
+
+    or:
+      "または",
+
+    info:
+      "タスク、テスト、学習時間、受験の進捗をアカウントに保存できます。",
+
+    passwordMismatch:
+      "パスワードが一致しません。",
+
+    invalidUsername:
+      "ユーザー名は3〜20文字で、英字・数字・アンダースコアのみ使用できます。",
+
+    passwordShort:
+      "パスワードは6文字以上にしてください。",
+
+    invalidLogin:
+      "ユーザー名またはパスワードが正しくありません。",
+
+    usernameTaken:
+      "そのユーザー名はすでに使用されています。",
+
+    accountCreated:
+      "アカウントを作成しました。ダッシュボードを開きます...",
+
+    loginSuccess:
+      "ログインしました。ダッシュボードを開きます...",
+
+    connectionError:
+      "サーバーに接続できませんでした。",
+
+    accountError:
+      "アカウントを作成できませんでした。",
+
+    googleNotConfigured:
+      "Googleログインがまだ設定されていません。",
+
+    googleError:
+      "Googleログインに失敗しました。",
+
+    invalidResponse:
+      "サーバーから正しい応答が返されませんでした。"
+  }
+
+};
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+let currentLanguage =
+  localStorage.getItem("tempoLanguage") || "en";
+
+
+function t(key) {
+
+  return (
+    translations[currentLanguage] &&
+    translations[currentLanguage][key]
+  ) ||
+  translations.en[key] ||
+  key;
+
+}
+
+
+function changeLanguage() {
+
+  currentLanguage =
+    document
+      .getElementById("languageSelect")
+      .value;
+
+  localStorage.setItem(
+    "tempoLanguage",
+    currentLanguage
+  );
+
+  applyLanguage();
+
+}
+
+
+function applyLanguage() {
+
+  document.documentElement.lang =
+    currentLanguage;
+
+  document.getElementById("subtitle").textContent =
+    t("subtitle");
+
+  document.getElementById("languageLabel").textContent =
+    t("language");
+
+  document.getElementById("loginTab").textContent =
+    t("login");
+
+  document.getElementById("registerTab").textContent =
+    t("register");
+
+  document.getElementById("loginUsernameLabel").textContent =
+    t("username");
+
+  document.getElementById("loginPasswordLabel").textContent =
+    t("password");
+
+  document.getElementById("registerUsernameLabel").textContent =
+    t("username");
+
+  document.getElementById("displayNameLabel").textContent =
+    t("displayName");
+
+  document.getElementById("registerPasswordLabel").textContent =
+    t("password");
+
+  document.getElementById("confirmPasswordLabel").textContent =
+    t("confirmPassword");
+
+  document.getElementById("loginUsername").placeholder =
+    t("usernamePlaceholder");
+
+  document.getElementById("loginPassword").placeholder =
+    t("passwordPlaceholder");
+
+  document.getElementById("registerUsername").placeholder =
+    t("usernameRegisterPlaceholder");
+
+  document.getElementById("displayName").placeholder =
+    t("displayNamePlaceholder");
+
+  document.getElementById("registerPassword").placeholder =
+    t("passwordPlaceholder");
+
+  document.getElementById("confirmPassword").placeholder =
+    t("confirmPasswordPlaceholder");
+
+  document.getElementById("loginButton").textContent =
+    t("loginButton");
+
+  document.getElementById("registerButton").textContent =
+    t("registerButton");
+
+  document.getElementById("googleButton").textContent =
+    t("google");
+
+  document.getElementById("orText").textContent =
+    t("or");
+
+  document.getElementById("infoText").textContent =
+    t("info");
+
+}
+
+
+/* =========================================================
+   API
 ========================================================= */
 
 async function api(action, data = {}) {
 
-  const response =
-    await fetch(
-      API_URL,
-      {
-        method: "POST",
+  let response;
 
-        headers: {
-          "Content-Type":
-            "text/plain;charset=utf-8"
-        },
+  try {
 
-        body: JSON.stringify({
-          action: action,
-          ...data
-        })
-      }
+    response =
+      await fetch(
+        API_URL,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+
+          body: JSON.stringify({
+            action: action,
+            ...data
+          })
+        }
+      );
+
+  } catch (error) {
+
+    throw new Error(
+      t("connectionError")
     );
+
+  }
 
 
   const text =
@@ -430,18 +841,15 @@ async function api(action, data = {}) {
 
   let result;
 
-
   try {
 
     result =
       JSON.parse(text);
 
-  }
-
-  catch(error) {
+  } catch (error) {
 
     throw new Error(
-      "The server returned an invalid response."
+      t("invalidResponse")
     );
 
   }
@@ -453,16 +861,83 @@ async function api(action, data = {}) {
 
 
 /* =========================================================
-   CHECK EXISTING SESSION
+   SESSION
 ========================================================= */
+
+function saveSession(result) {
+
+  if (!result || !result.token) {
+    throw new Error(
+      t("invalidResponse")
+    );
+  }
+
+  localStorage.setItem(
+    "tempoToken",
+    result.token
+  );
+
+  /*
+    Keep the old key too so existing
+    Tempo/ExamOS pages don't suddenly
+    forget the user's session.
+  */
+
+  localStorage.setItem(
+    "examToken",
+    result.token
+  );
+
+  if (result.username) {
+
+    localStorage.setItem(
+      "tempoUsername",
+      result.username
+    );
+
+    localStorage.setItem(
+      "examUsername",
+      result.username
+    );
+
+  }
+
+  const displayName =
+    result.displayName ||
+    result.username ||
+    "";
+
+  if (displayName) {
+
+    localStorage.setItem(
+      "tempoDisplayName",
+      displayName
+    );
+
+    localStorage.setItem(
+      "examDisplayName",
+      displayName
+    );
+
+  }
+
+  if (result.email) {
+
+    localStorage.setItem(
+      "tempoEmail",
+      result.email
+    );
+
+  }
+
+}
+
 
 function checkExistingSession() {
 
   const token =
-    localStorage.getItem(
-      "examToken"
-    );
-
+    localStorage.getItem("tempoToken") ||
+    localStorage.getItem("examToken");
 
   if (token) {
 
@@ -475,7 +950,7 @@ function checkExistingSession() {
 
 
 /* =========================================================
-   SWITCH TO LOGIN
+   TABS
 ========================================================= */
 
 function showLogin() {
@@ -488,7 +963,6 @@ function showLogin() {
     .getElementById("registerForm")
     .classList.remove("active");
 
-
   document
     .getElementById("loginTab")
     .classList.add("active");
@@ -497,15 +971,10 @@ function showLogin() {
     .getElementById("registerTab")
     .classList.remove("active");
 
-
   clearStatus();
 
 }
 
-
-/* =========================================================
-   SWITCH TO REGISTER
-========================================================= */
 
 function showRegister() {
 
@@ -517,7 +986,6 @@ function showRegister() {
     .getElementById("loginForm")
     .classList.remove("active");
 
-
   document
     .getElementById("registerTab")
     .classList.add("active");
@@ -525,7 +993,6 @@ function showRegister() {
   document
     .getElementById("loginTab")
     .classList.remove("active");
-
 
   clearStatus();
 
@@ -540,7 +1007,6 @@ async function login(event) {
 
   event.preventDefault();
 
-
   const username =
     document
       .getElementById("loginUsername")
@@ -548,22 +1014,19 @@ async function login(event) {
       .trim()
       .toLowerCase();
 
-
   const password =
     document
       .getElementById("loginPassword")
       .value;
 
-
   const button =
     document
       .getElementById("loginButton");
 
-
   if (!username || !password) {
 
     showStatus(
-      "Please enter your username and password.",
+      t("invalidLogin"),
       true
     );
 
@@ -571,15 +1034,12 @@ async function login(event) {
 
   }
 
-
   button.disabled = true;
 
   button.textContent =
-    "Logging in...";
-
+    t("loggingIn");
 
   clearStatus();
-
 
   try {
 
@@ -587,75 +1047,48 @@ async function login(event) {
       await api(
         "login",
         {
-          username: username,
-          password: password
+          username:
+            username,
+
+          password:
+            password
         }
       );
-
 
     if (!result.success) {
 
       const errors = {
 
         INVALID_LOGIN:
-          "Incorrect username or password.",
+          t("invalidLogin"),
 
         INVALID_USERNAME:
-          "That username is invalid."
+          t("invalidUsername")
 
       };
-
 
       throw new Error(
         errors[result.error] ||
         result.error ||
-        "Login failed."
+        t("invalidLogin")
       );
 
     }
 
-
-    /*
-      Store ONLY the session information
-      needed by the frontend.
-    */
-
-    localStorage.setItem(
-      "examToken",
-      result.token
-    );
-
-
-    localStorage.setItem(
-      "examUsername",
-      result.username
-    );
-
-
-    localStorage.setItem(
-      "examDisplayName",
-      result.displayName ||
-      result.username
-    );
-
+    saveSession(result);
 
     showStatus(
-      "Login successful. Opening your dashboard...",
+      t("loginSuccess"),
       false
     );
 
-
-    /*
-      Small delay so the success message
-      can actually appear before navigation.
-    */
-
-    setTimeout(function() {
-
-      window.location.href =
-        "dashboard.html";
-
-    }, 350);
+    setTimeout(
+      function() {
+        window.location.href =
+          "dashboard.html";
+      },
+      350
+    );
 
   }
 
@@ -663,7 +1096,7 @@ async function login(event) {
 
     showStatus(
       error.message ||
-      "Could not connect to the server.",
+      t("connectionError"),
       true
     );
 
@@ -674,7 +1107,7 @@ async function login(event) {
     button.disabled = false;
 
     button.textContent =
-      "Log in";
+      t("loginButton");
 
   }
 
@@ -689,7 +1122,6 @@ async function register(event) {
 
   event.preventDefault();
 
-
   const username =
     document
       .getElementById("registerUsername")
@@ -697,35 +1129,30 @@ async function register(event) {
       .trim()
       .toLowerCase();
 
-
   const displayName =
     document
       .getElementById("displayName")
       .value
       .trim();
 
-
   const password =
     document
       .getElementById("registerPassword")
       .value;
-
 
   const confirmPassword =
     document
       .getElementById("confirmPassword")
       .value;
 
-
   const button =
     document
       .getElementById("registerButton");
 
-
   if (password !== confirmPassword) {
 
     showStatus(
-      "The passwords do not match.",
+      t("passwordMismatch"),
       true
     );
 
@@ -733,23 +1160,25 @@ async function register(event) {
 
   }
 
-
-  if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+  if (
+    !/^[a-zA-Z0-9_]{3,20}$/.test(
+      username
+    )
+  ) {
 
     showStatus(
-      "Username must be 3–20 characters and use only letters, numbers or underscores.",
+      t("invalidUsername"),
       true
     );
 
     return;
 
   }
-
 
   if (password.length < 6) {
 
     showStatus(
-      "Password must be at least 6 characters.",
+      t("passwordShort"),
       true
     );
 
@@ -757,15 +1186,12 @@ async function register(event) {
 
   }
 
-
   button.disabled = true;
 
   button.textContent =
-    "Creating account...";
-
+    t("creating");
 
   clearStatus();
-
 
   try {
 
@@ -773,71 +1199,87 @@ async function register(event) {
       await api(
         "createUser",
         {
-          username: username,
-          password: password,
+          username:
+            username,
+
+          password:
+            password,
+
           displayName:
             displayName ||
             username
         }
       );
 
-
     if (!result.success) {
 
       const errors = {
 
         INVALID_USERNAME:
-          "That username is invalid.",
+          t("invalidUsername"),
 
         PASSWORD_TOO_SHORT:
-          "Password must be at least 6 characters.",
+          t("passwordShort"),
 
         USERNAME_EXISTS:
-          "That username is already taken."
+          t("usernameTaken")
 
       };
-
 
       throw new Error(
         errors[result.error] ||
         result.error ||
-        "Could not create account."
+        t("accountError")
       );
 
     }
 
+    saveSession(result);
 
-    localStorage.setItem(
-      "examToken",
-      result.token
-    );
+    /*
+      Save the selected language
+      to the backend as well.
+    */
 
+    try {
 
-    localStorage.setItem(
-      "examUsername",
-      result.username
-    );
+      await api(
+        "setLanguage",
+        {
+          token:
+            result.token,
 
+          language:
+            currentLanguage
+        }
+      );
 
-    localStorage.setItem(
-      "examDisplayName",
-      result.displayName ||
-      result.username
-    );
+    } catch (languageError) {
 
+      /*
+        Account creation still succeeded.
+        Language sync should never break login.
+      */
+
+      console.warn(
+        "Could not save language preference:",
+        languageError
+      );
+
+    }
 
     showStatus(
-      "Account created. Opening your dashboard...",
+      t("accountCreated"),
       false
     );
 
-
-    setTimeout(function() {
-
-      window.location.href =
-        "dashboard.html";
-
-    }, 350);
+    setTimeout(
+      function() {
+        window.location.href =
+          "dashboard.html";
+      },
+      350
+    );
 
   }
 
@@ -845,7 +1287,7 @@ async function register(event) {
 
     showStatus(
       error.message ||
-      "Could not create your account.",
+      t("accountError"),
       true
     );
 
@@ -856,7 +1298,274 @@ async function register(event) {
     button.disabled = false;
 
     button.textContent =
-      "Create account";
+      t("registerButton");
+
+  }
+
+}
+
+
+/* =========================================================
+   GOOGLE LOGIN
+========================================================= */
+
+function googleLogin() {
+
+  if (!GOOGLE_CLIENT_ID) {
+
+    showStatus(
+      t("googleNotConfigured"),
+      true
+    );
+
+    return;
+
+  }
+
+  /*
+    Google Identity Services is loaded
+    dynamically only when Google login
+    is actually configured.
+  */
+
+  if (
+    typeof google === "undefined" ||
+    !google.accounts ||
+    !google.accounts.id
+  ) {
+
+    loadGoogleIdentity();
+
+    showStatus(
+      currentLanguage === "ja"
+        ? "Googleログインを読み込んでいます。もう一度お試しください。"
+        : "Loading Google login. Please try again.",
+      false
+    );
+
+    return;
+
+  }
+
+  startGoogleLogin();
+
+}
+
+
+function loadGoogleIdentity() {
+
+  if (
+    document.getElementById(
+      "googleIdentityScript"
+    )
+  ) {
+
+    return;
+
+  }
+
+  const script =
+    document.createElement("script");
+
+  script.id =
+    "googleIdentityScript";
+
+  script.src =
+    "https://accounts.google.com/gsi/client";
+
+  script.async = true;
+
+  script.defer = true;
+
+  script.onload =
+    function() {
+
+      startGoogleLogin();
+
+    };
+
+  script.onerror =
+    function() {
+
+      showStatus(
+        t("googleError"),
+        true
+      );
+
+    };
+
+  document.head.appendChild(
+    script
+  );
+
+}
+
+
+function startGoogleLogin() {
+
+  if (
+    typeof google === "undefined" ||
+    !google.accounts ||
+    !google.accounts.id
+  ) {
+
+    showStatus(
+      t("googleError"),
+      true
+    );
+
+    return;
+
+  }
+
+  google.accounts.id.initialize({
+
+    client_id:
+      GOOGLE_CLIENT_ID,
+
+    callback:
+      handleGoogleCredential
+
+  });
+
+  google.accounts.id.prompt();
+
+}
+
+
+async function handleGoogleCredential(response) {
+
+  if (
+    !response ||
+    !response.credential
+  ) {
+
+    showStatus(
+      t("googleError"),
+      true
+    );
+
+    return;
+
+  }
+
+  const button =
+    document.getElementById(
+      "googleButton"
+    );
+
+  button.disabled = true;
+
+  button.textContent =
+    currentLanguage === "ja"
+      ? "Googleでログイン中..."
+      : "Signing in with Google...";
+
+  clearStatus();
+
+  try {
+
+    const result =
+      await api(
+        "googleLogin",
+        {
+          idToken:
+            response.credential
+        }
+      );
+
+    if (!result.success) {
+
+      const errors = {
+
+        MISSING_GOOGLE_TOKEN:
+          t("googleError"),
+
+        INVALID_GOOGLE_TOKEN:
+          t("googleError"),
+
+        INVALID_GOOGLE_ISSUER:
+          t("googleError"),
+
+        GOOGLE_CLIENT_MISMATCH:
+          t("googleError"),
+
+        GOOGLE_EMAIL_NOT_VERIFIED:
+          t("googleError"),
+
+        GOOGLE_LOGIN_ERROR:
+          t("googleError")
+
+      };
+
+      throw new Error(
+        errors[result.error] ||
+        result.error ||
+        t("googleError")
+      );
+
+    }
+
+    saveSession(result);
+
+    /*
+      New Google users get the current
+      language preference saved too.
+    */
+
+    try {
+
+      await api(
+        "setLanguage",
+        {
+          token:
+            result.token,
+
+          language:
+            currentLanguage
+        }
+      );
+
+    } catch (languageError) {
+
+      console.warn(
+        "Could not save Google language preference:",
+        languageError
+      );
+
+    }
+
+    showStatus(
+      t("loginSuccess"),
+      false
+    );
+
+    setTimeout(
+      function() {
+        window.location.href =
+          "dashboard.html";
+      },
+      350
+    );
+
+  }
+
+  catch(error) {
+
+    showStatus(
+      error.message ||
+      t("googleError"),
+      true
+    );
+
+  }
+
+  finally {
+
+    button.disabled = false;
+
+    button.textContent =
+      t("google");
 
   }
 
@@ -877,10 +1586,8 @@ function showStatus(
       "status"
     );
 
-
   status.textContent =
     message;
-
 
   status.className =
     "status show " +
@@ -900,10 +1607,8 @@ function clearStatus() {
       "status"
     );
 
-
   status.textContent =
     "";
-
 
   status.className =
     "status";
@@ -912,8 +1617,15 @@ function clearStatus() {
 
 
 /* =========================================================
-   START
+   INITIALIZATION
 ========================================================= */
+
+document
+  .getElementById("languageSelect")
+  .value =
+    currentLanguage;
+
+applyLanguage();
 
 checkExistingSession();
 
@@ -921,3 +1633,4 @@ checkExistingSession();
 
 </body>
 </html>
+```
