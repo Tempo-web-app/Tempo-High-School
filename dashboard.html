@@ -1,654 +1,638 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-
 <meta charset="utf-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tempo — Dashboard</title>
 
 <style>
-
 :root{
---navy:#14264c;
---blue:#3f78ff;
---bg:#f5f7fb;
---ink:#18243a;
---muted:#71809a;
---card:#fff;
---line:#e5eaf3;
---green:#22af83;
---orange:#ff9e45;
---red:#e96070;
---purple:#7d62ff
+  --navy:#14264c;
+  --blue:#3f78ff;
+  --bg:#f5f7fb;
+  --ink:#18243a;
+  --muted:#71809a;
+  --card:#fff;
+  --line:#e5eaf3;
+  --green:#22af83;
+  --orange:#ff9e45;
+  --red:#e96070;
+  --purple:#7d62ff
 }
 
-*{
-box-sizing:border-box
-}
+*{box-sizing:border-box}
 
 body{
-margin:0;
-background:var(--bg);
-font-family:Inter,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
-color:var(--ink)
+  margin:0;
+  background:var(--bg);
+  font-family:Inter,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+  color:var(--ink)
 }
 
 button,input,select,textarea{
-font:inherit
+  font:inherit
 }
 
 .app{
-display:flex;
-min-height:100vh
+  display:flex;
+  min-height:100vh
 }
 
 .side{
-position:fixed;
-inset:0 auto 0 0;
-width:242px;
-background:var(--navy);
-padding:25px 13px;
-color:#c8d4eb
+  position:fixed;
+  inset:0 auto 0 0;
+  width:242px;
+  background:var(--navy);
+  padding:25px 13px;
+  color:#c8d4eb
 }
 
 .brand{
-padding:0 11px 29px;
-color:#fff;
-font-size:28px;
-font-weight:900;
-letter-spacing:-1px
+  padding:0 11px 29px;
+  color:#fff;
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:-1px
 }
 
 .brand i{
-font-style:normal;
-color:#91b0ff
+  font-style:normal;
+  color:#91b0ff
 }
 
 .nav button{
-width:100%;
-text-align:left;
-border:0;
-background:transparent;
-color:#c6d2e9;
-padding:12px;
-border-radius:10px;
-margin:2px 0;
-font-size:13px;
-font-weight:800;
-cursor:pointer
+  width:100%;
+  text-align:left;
+  border:0;
+  background:transparent;
+  color:#c6d2e9;
+  padding:12px;
+  border-radius:10px;
+  margin:2px 0;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer
 }
 
 .nav button.active,
 .nav button:hover{
-background:#2a4372;
-color:#fff
+  background:#2a4372;
+  color:#fff
 }
 
 .sidefoot{
-position:absolute;
-bottom:20px;
-left:14px;
-right:14px;
-padding:14px;
-background:#203961;
-border-radius:12px;
-font-size:12px;
-line-height:1.55
+  position:absolute;
+  bottom:20px;
+  left:14px;
+  right:14px;
+  padding:14px;
+  background:#203961;
+  border-radius:12px;
+  font-size:12px;
+  line-height:1.55
 }
 
 .sidefoot b{
-color:#fff
+  color:#fff
 }
 
 main{
-width:calc(100% - 242px);
-margin-left:242px;
-padding:29px 40px 50px
+  width:calc(100% - 242px);
+  margin-left:242px;
+  padding:29px 40px 50px
 }
 
 .top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-margin-bottom:27px
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:27px
 }
 
 .top h1{
-font-size:26px;
-margin:0
+  font-size:26px;
+  margin:0
 }
 
 .top p{
-margin:7px 0 0;
-font-size:13px;
-color:var(--muted)
+  margin:7px 0 0;
+  font-size:13px;
+  color:var(--muted)
 }
 
 .topright{
-display:flex;
-align-items:center;
-gap:10px
+  display:flex;
+  align-items:center;
+  gap:10px
 }
 
 .lang{
-border:1px solid var(--line);
-background:#fff;
-padding:8px;
-border-radius:9px;
-font-size:12px;
-font-weight:800
+  border:1px solid var(--line);
+  background:#fff;
+  padding:8px;
+  border-radius:9px;
+  font-size:12px;
+  font-weight:800
 }
 
 .avatar{
-height:39px;
-width:39px;
-border-radius:50%;
-display:grid;
-place-items:center;
-color:var(--navy);
-background:#dce6ff;
-font-weight:900
+  height:39px;
+  width:39px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:var(--navy);
+  background:#dce6ff;
+  font-weight:900
 }
 
 .view{
-display:none
+  display:none
 }
 
 .view.active{
-display:block
+  display:block
 }
 
 .cards{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px
 }
 
 .card{
-background:var(--card);
-border:1px solid #ebeff6;
-border-radius:16px;
-padding:18px;
-box-shadow:0 10px 30px rgba(25,47,91,.06)
+  background:var(--card);
+  border:1px solid #ebeff6;
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 10px 30px rgba(25,47,91,.06)
 }
 
 .label{
-font-size:12px;
-font-weight:800;
-color:var(--muted)
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted)
 }
 
 .big{
-margin-top:10px;
-font-size:31px;
-font-weight:900
+  margin-top:10px;
+  font-size:31px;
+  font-weight:900
 }
 
 .sub{
-font-size:12px;
-color:var(--muted);
-margin-top:7px
+  font-size:12px;
+  color:var(--muted);
+  margin-top:7px
 }
 
 .good{
-color:var(--green)
+  color:var(--green)
 }
 
 .orange{
-color:var(--orange)
+  color:var(--orange)
 }
 
 .grid{
-display:grid;
-grid-template-columns:1.2fr .8fr;
-gap:17px;
-margin-top:17px
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:17px;
+  margin-top:17px
 }
 
 .title{
-font-size:16px;
-font-weight:900;
-margin:0 0 15px;
-display:flex;
-justify-content:space-between;
-align-items:center
+  font-size:16px;
+  font-weight:900;
+  margin:0 0 15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
 }
 
 .link{
-border:0;
-background:transparent;
-color:var(--blue);
-font-size:12px;
-font-weight:800;
-cursor:pointer
+  border:0;
+  background:transparent;
+  color:var(--blue);
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer
 }
 
 .plan{
-background:linear-gradient(135deg,#eaf0ff,#f1efff);
-padding:17px;
-border-radius:14px
+  background:linear-gradient(135deg,#eaf0ff,#f1efff);
+  padding:17px;
+  border-radius:14px
 }
 
 .plan h3{
-margin:0;
-font-size:17px
+  margin:0;
+  font-size:17px
 }
 
 .why{
-font-size:12px;
-color:#506181;
-line-height:1.6;
-margin:8px 0 12px
+  font-size:12px;
+  color:#506181;
+  line-height:1.6;
+  margin:8px 0 12px
 }
 
 .task{
-display:flex;
-align-items:center;
-gap:10px;
-background:#fff;
-border-radius:10px;
-padding:10px;
-margin-top:7px;
-font-size:13px;
-font-weight:700
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#fff;
+  border-radius:10px;
+  padding:10px;
+  margin-top:7px;
+  font-size:13px;
+  font-weight:700
 }
 
 .time{
-width:43px;
-color:var(--purple);
-font-weight:900
+  width:43px;
+  color:var(--purple);
+  font-weight:900
 }
 
 .dot{
-width:9px;
-height:9px;
-border-radius:50%;
-background:var(--orange)
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--orange);
+  flex-shrink:0
 }
 
 .break{
-justify-content:center;
-color:var(--muted);
-background:#fbfcff;
-font-size:12px
+  justify-content:center;
+  color:var(--muted);
+  background:#fbfcff;
+  font-size:12px
 }
 
 .primary{
-border:0;
-background:var(--blue);
-color:#fff;
-padding:10px 13px;
-border-radius:9px;
-font-size:13px;
-font-weight:800;
-cursor:pointer
+  border:0;
+  background:var(--blue);
+  color:#fff;
+  padding:10px 13px;
+  border-radius:9px;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer
 }
 
 .primary:disabled{
-opacity:.6;
-cursor:not-allowed
+  opacity:.6;
+  cursor:not-allowed
 }
 
 .planfoot{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-top:14px;
-color:var(--muted);
-font-size:12px
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:14px;
+  color:var(--muted);
+  font-size:12px
 }
 
 .progress{
-margin:14px 0
+  margin:14px 0
 }
 
 .prolabel{
-display:flex;
-justify-content:space-between;
-font-size:13px;
-font-weight:800;
-margin-bottom:7px
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:7px
 }
 
 .bar{
-height:8px;
-background:#edf1f7;
-border-radius:99px;
-overflow:hidden
+  height:8px;
+  background:#edf1f7;
+  border-radius:99px;
+  overflow:hidden
 }
 
 .bar i{
-display:block;
-height:100%;
-background:var(--blue);
-border-radius:99px
+  display:block;
+  height:100%;
+  background:var(--blue);
+  border-radius:99px
 }
 
 .event{
-display:flex;
-gap:10px;
-align-items:center;
-padding:11px 0;
-border-bottom:1px solid var(--line)
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:11px 0;
+  border-bottom:1px solid var(--line)
 }
 
 .event:last-child{
-border:0
+  border:0
 }
 
 .date{
-width:40px;
-background:#edf3ff;
-color:var(--blue);
-border-radius:9px;
-text-align:center;
-padding:5px;
-font-size:11px;
-font-weight:900
+  width:40px;
+  background:#edf3ff;
+  color:var(--blue);
+  border-radius:9px;
+  text-align:center;
+  padding:5px;
+  font-size:11px;
+  font-weight:900
 }
 
 .event b{
-font-size:13px
+  font-size:13px
 }
 
 .event small{
-display:block;
-color:var(--muted);
-font-size:11px;
-margin-top:3px
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px
 }
 
 .sectionhead{
-display:flex;
-justify-content:space-between;
-align-items:end;
-margin:0 0 18px
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin:0 0 18px
 }
 
 .sectionhead h2{
-margin:0;
-font-size:23px
+  margin:0;
+  font-size:23px
 }
 
 .sectionhead p{
-margin:7px 0 0;
-color:var(--muted);
-font-size:13px
+  margin:7px 0 0;
+  color:var(--muted);
+  font-size:13px
 }
 
 .two{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:16px
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px
 }
 
 .field{
-margin:12px 0
+  margin:12px 0
 }
 
 .field label{
-font-size:12px;
-font-weight:800;
-display:block;
-margin-bottom:6px
+  font-size:12px;
+  font-weight:800;
+  display:block;
+  margin-bottom:6px
 }
 
 .field input,
 .field textarea,
 .field select{
-width:100%;
-border:1px solid var(--line);
-border-radius:9px;
-padding:11px;
-font-size:14px;
-background:#fff
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:11px;
+  font-size:14px;
+  background:#fff
 }
 
 .field textarea{
-resize:vertical;
-min-height:80px
+  resize:vertical;
+  min-height:80px
 }
 
 .save{
-margin-top:12px
+  margin-top:12px
 }
 
 .chat{
-height:545px;
-display:flex;
-flex-direction:column
+  height:545px;
+  display:flex;
+  flex-direction:column
 }
 
 .messages{
-flex:1;
-overflow:auto;
-padding-right:4px
+  flex:1;
+  overflow:auto;
+  padding-right:4px
 }
 
 .msg{
-max-width:82%;
-margin:9px 0;
-padding:12px 14px;
-font-size:13px;
-line-height:1.6;
-border-radius:14px;
-white-space:pre-wrap
+  max-width:82%;
+  margin:9px 0;
+  padding:12px 14px;
+  font-size:13px;
+  line-height:1.6;
+  border-radius:14px;
+  white-space:pre-wrap
 }
 
 .msg.ai{
-background:#edf3ff;
-color:#334b78
+  background:#edf3ff;
+  color:#334b78
 }
 
 .msg.user{
-background:var(--blue);
-color:white;
-margin-left:auto
+  background:var(--blue);
+  color:white;
+  margin-left:auto
 }
 
 .compose{
-display:flex;
-gap:8px;
-padding-top:12px;
-border-top:1px solid var(--line)
+  display:flex;
+  gap:8px;
+  padding-top:12px;
+  border-top:1px solid var(--line)
 }
 
 .compose input{
-flex:1;
-border:1px solid var(--line);
-border-radius:9px;
-padding:11px;
-font-size:13px
+  flex:1;
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:11px;
+  font-size:13px
 }
 
 .notice{
-font-size:12px;
-line-height:1.6;
-padding:12px;
-background:#fff8e9;
-border:1px solid #ffe3ae;
-border-radius:10px
+  font-size:12px;
+  line-height:1.6;
+  padding:12px;
+  background:#fff8e9;
+  border:1px solid #ffe3ae;
+  border-radius:10px
 }
 
 .results{
-display:grid;
-grid-template-columns:1.1fr .9fr;
-gap:16px
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:16px
 }
 
 .scores{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:8px
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px
 }
 
 .scores input{
-width:100%;
-border:1px solid var(--line);
-padding:10px 6px;
-border-radius:8px;
-text-align:center
+  width:100%;
+  border:1px solid var(--line);
+  padding:10px 6px;
+  border-radius:8px;
+  text-align:center
 }
 
 .scores label{
-display:block;
-font-size:11px;
-font-weight:800;
-color:var(--muted);
-margin-bottom:4px
+  display:block;
+  font-size:11px;
+  font-weight:800;
+  color:var(--muted);
+  margin-bottom:4px
 }
 
 .row{
-padding:11px 2px;
-border-bottom:1px solid var(--line);
-display:flex;
-justify-content:space-between;
-gap:10px;
-font-size:13px
+  padding:11px 2px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:13px
 }
 
 .share{
-border:1px solid var(--line);
-border-radius:12px;
-padding:15px;
-margin-top:12px
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:15px;
+  margin-top:12px
 }
 
 .toast{
-position:fixed;
-bottom:22px;
-right:22px;
-background:var(--navy);
-color:white;
-padding:13px 16px;
-border-radius:10px;
-font-size:13px;
-opacity:0;
-transform:translateY(8px);
-transition:.2s;
-z-index:100
+  position:fixed;
+  bottom:22px;
+  right:22px;
+  background:var(--navy);
+  color:white;
+  padding:13px 16px;
+  border-radius:10px;
+  font-size:13px;
+  opacity:0;
+  transform:translateY(8px);
+  transition:.2s;
+  z-index:100
 }
 
 .toast.show{
-opacity:1;
-transform:none
-}
-
-.loading{
-opacity:.65;
-pointer-events:none
+  opacity:1;
+  transform:none
 }
 
 @media(max-width:980px){
 
-.side{
-width:67px;
-padding:20px 8px
-}
+  .side{
+    width:67px;
+    padding:20px 8px
+  }
 
-.brand{
-font-size:0
-}
+  .brand{
+    font-size:0
+  }
 
-.nav button{
-font-size:0;
-text-align:center
-}
+  .nav button{
+    font-size:0;
+    text-align:center
+  }
 
-.nav button:before{
-content:'•';
-font-size:18px
-}
+  .nav button:before{
+    content:'•';
+    font-size:18px
+  }
 
-.sidefoot{
-display:none
-}
+  .sidefoot{
+    display:none
+  }
 
-main{
-width:calc(100% - 67px);
-margin-left:67px;
-padding:25px
-}
+  main{
+    width:calc(100% - 67px);
+    margin-left:67px;
+    padding:25px
+  }
 
-.cards{
-grid-template-columns:repeat(2,1fr)
-}
+  .cards{
+    grid-template-columns:repeat(2,1fr)
+  }
 
-.grid,
-.two,
-.results{
-grid-template-columns:1fr
-}
-
+  .grid,
+  .two,
+  .results{
+    grid-template-columns:1fr
+  }
 }
 
 @media(max-width:560px){
 
-main{
-padding:18px 13px 82px
-}
+  main{
+    padding:18px 13px 82px
+  }
 
-.side{
-position:fixed;
-top:auto;
-width:100%;
-height:62px;
-z-index:5;
-padding:6px
-}
+  .side{
+    position:fixed;
+    top:auto;
+    width:100%;
+    height:62px;
+    z-index:5;
+    padding:6px
+  }
 
-.nav{
-display:flex;
-justify-content:space-around
-}
+  .nav{
+    display:flex;
+    justify-content:space-around
+  }
 
-.nav button{
-width:auto;
-padding:8px
-}
+  .nav button{
+    width:auto;
+    padding:8px
+  }
 
-.nav button:nth-child(n+6){
-display:none
-}
+  .nav button:nth-child(n+6){
+    display:none
+  }
 
-main{
-margin-left:0;
-width:100%
-}
+  main{
+    margin-left:0;
+    width:100%
+  }
 
-.top h1{
-font-size:21px
-}
+  .top h1{
+    font-size:21px
+  }
 
-.cards{
-gap:9px
-}
+  .cards{
+    gap:9px
+  }
 
-.card{
-padding:14px
-}
+  .card{
+    padding:14px
+  }
 
-.big{
-font-size:24px
-}
+  .big{
+    font-size:24px
+  }
 
-.topright .avatar{
-display:none
-}
+  .topright .avatar{
+    display:none
+  }
 
-.scores{
-grid-template-columns:repeat(3,1fr)
+  .scores{
+    grid-template-columns:repeat(3,1fr)
+  }
 }
-
-}
-
 </style>
-
 </head>
 
 <body>
@@ -694,32 +678,23 @@ Tem<i>po</i>
 </nav>
 
 <div class="sidefoot">
-
 <b>Tempo</b><br>
-
 <span data-t="sidefoot">
 Small steps, closer to your goal.
 </span>
-
 </div>
 
 </aside>
-
 
 <main>
 
 <header class="top">
 
 <div>
-
-<h1 id="hello">
-Hello!
-</h1>
-
+<h1 id="hello">Hello!</h1>
 <p id="tagline">
 Your study progress, all in one place.
 </p>
-
 </div>
 
 <div class="topright">
@@ -729,15 +704,8 @@ class="lang"
 id="language"
 onchange="changeLanguage(this.value)"
 >
-
-<option value="en">
-English
-</option>
-
-<option value="ja">
-日本語
-</option>
-
+<option value="en">English</option>
+<option value="ja">日本語</option>
 </select>
 
 <div class="avatar" id="avatar">
@@ -756,70 +724,35 @@ T
 <div class="cards">
 
 <div class="card">
-
 <div class="label" data-t="days">
 Days until exam
 </div>
-
-<div class="big" id="days">
-—
+<div class="big" id="days">—</div>
+<div class="sub" id="schoolLabel">—</div>
 </div>
-
-<div class="sub" id="schoolLabel">
-—
-</div>
-
-</div>
-
 
 <div class="card">
-
 <div class="label" data-t="current">
 Current deviation score
 </div>
-
-<div class="big" id="current">
-—
+<div class="big" id="current">—</div>
+<div class="sub orange" id="gap">—</div>
 </div>
-
-<div class="sub orange" id="gap">
-—
-</div>
-
-</div>
-
 
 <div class="card">
-
 <div class="label" data-t="weekly">
 Study this week
 </div>
-
-<div class="big" id="week">
-—
+<div class="big" id="week">—</div>
+<div class="sub" id="weekTarget">—</div>
 </div>
-
-<div class="sub" id="weekTarget">
-—
-</div>
-
-</div>
-
 
 <div class="card">
-
 <div class="label" data-t="tasksDone">
 Tasks completed
 </div>
-
-<div class="big" id="tasksDone">
-—
-</div>
-
-<div class="sub good" id="taskSub">
-—
-</div>
-
+<div class="big" id="tasksDone">—</div>
+<div class="sub good" id="taskSub">—</div>
 </div>
 
 </div>
@@ -830,7 +763,6 @@ Tasks completed
 <div class="card">
 
 <div class="title">
-
 <span data-t="today">
 Today's focus
 </span>
@@ -937,8 +869,10 @@ Personal guidance based on your saved Tempo data.
 
 <div class="card chat">
 
-<div class="messages" id="coachMessages">
-</div>
+<div
+class="messages"
+id="coachMessages"
+></div>
 
 <div class="compose">
 
@@ -950,7 +884,7 @@ placeholder="What should I study today?"
 
 <button
 class="primary"
-id="coachSend"
+id="coachSendButton"
 onclick="sendCoach()"
 >
 ↑
@@ -976,7 +910,7 @@ Homework Helper
 </h2>
 
 <p data-t="hwSub">
-Hints and explanations, not answers to copy.
+Hints and explanations—not answers to copy.
 </p>
 
 </div>
@@ -1027,7 +961,6 @@ placeholder="Paste the question and what you tried."
 
 <button
 class="primary"
-id="hwSend"
 onclick="sendHomework()"
 data-t="hint"
 >
@@ -1042,8 +975,7 @@ Get a hint
 <div
 class="messages"
 id="hwMessages"
->
-</div>
+></div>
 
 </div>
 
@@ -1420,13 +1352,15 @@ Shared parents
 
 </section>
 
-
 </main>
 
 </div>
 
 
-<div class="toast" id="toast"></div>
+<div
+class="toast"
+id="toast"
+></div>
 
 
 <script>
@@ -1440,7 +1374,9 @@ const API_URL =
 
 
 let lang =
-localStorage.getItem('tempoLanguage') || 'en';
+localStorage.getItem(
+  'tempoLanguage'
+) || 'en';
 
 
 /* ==================================================
@@ -1459,7 +1395,8 @@ results:'Results',
 parents:'Share with Parents',
 logout:'Log out',
 
-sidefoot:'Small steps, closer to your goal.',
+sidefoot:
+'Small steps, closer to your goal.',
 
 days:'Days until exam',
 current:'Current deviation score',
@@ -1474,35 +1411,62 @@ getPlan:'Get a plan',
 subjectProgress:'Subject focus',
 upcoming:'Upcoming tests',
 
-coachSub:'Personal guidance based on your saved Tempo data.',
-coachPH:'What should I study today?',
+coachSub:
+'Personal guidance based on your saved Tempo data.',
 
-hwSub:'Hints and explanations, not answers to copy.',
-hwNotice:'Tempo helps you understand the method. It will not complete submitted homework for you.',
+coachPH:
+'What should I study today?',
+
+homework:'Homework Helper',
+
+hwSub:
+'Hints and explanations—not answers to copy.',
+
+hwNotice:
+'Tempo helps you understand the method. It will not complete submitted homework for you.',
 
 subject:'Subject',
 question:'Question or where you are stuck',
-hwPH:'Paste the question and what you tried.',
+
+hwPH:
+'Paste the question and what you tried.',
+
 hint:'Get a hint',
 
-profileSub:'Make advice personal to your exam goal.',
+profileSub:
+'Make advice personal to your exam goal.',
+
 grade:'Grade',
 first:'First-choice school',
 examDate:'Exam date',
-weak:'Weak subjects (comma-separated)',
-daily:'Study hours available per day',
-problem:'Biggest study problem',
+
+weak:
+'Weak subjects (comma-separated)',
+
+daily:
+'Study hours available per day',
+
+problem:
+'Biggest study problem',
+
 save:'Save profile',
 
-resultsSub:'Record scores so Tempo can identify what to improve.',
+resultsSub:
+'Record scores so Tempo can identify what to improve.',
+
 addResult:'Add test result',
 testName:'Test name',
 date:'Date',
 dev:'Deviation score',
-saveResult:'Save result',
-recentResults:'Recent results',
 
-parentSub:'Parents see study progress, not your private AI chats.',
+saveResult:'Save result',
+
+recentResults:
+'Recent results',
+
+parentSub:
+'Parents see study progress, not your private AI chats.',
+
 invite:'Invite a parent',
 parentName:'Parent name',
 parentEmail:'Parent email',
@@ -1521,7 +1485,8 @@ results:'成績',
 parents:'保護者と共有',
 logout:'ログアウト',
 
-sidefoot:'小さな一歩が、志望校へつながる。',
+sidefoot:
+'小さな一歩が、志望校へつながる。',
 
 days:'入試まで',
 current:'現在の偏差値',
@@ -1536,35 +1501,60 @@ getPlan:'計画を作る',
 subjectProgress:'重点教科',
 upcoming:'今後のテスト',
 
-coachSub:'保存された目標・成績・学習記録に基づいてアドバイスします。',
-coachPH:'例：今日何を勉強すればいい？',
+coachSub:
+'保存された目標・成績・学習記録に基づいてアドバイスします。',
 
-hwSub:'答えの丸写しではなく、ヒントと考え方を学べます。',
-hwNotice:'Tempoは提出用の宿題を代わりに完成させません。解き方を理解するためのヒントを出します。',
+coachPH:
+'例：今日何を勉強すればいい？',
+
+hwSub:
+'答えの丸写しではなく、ヒントと考え方を学べます。',
+
+hwNotice:
+'Tempoは提出用の宿題を代わりに完成させません。解き方を理解するためのヒントを出します。',
 
 subject:'教科',
 question:'問題・困っているところ',
-hwPH:'問題文と、自分で考えたことを書いてください。',
+
+hwPH:
+'問題文と、自分で考えたことを書いてください。',
+
 hint:'ヒントをもらう',
 
-profileSub:'受験目標に合ったアドバイスにします。',
+profileSub:
+'受験目標に合ったアドバイスにします。',
+
 grade:'学年',
 first:'第一志望校',
 examDate:'入試日',
-weak:'苦手教科（「、」またはカンマ区切り）',
-daily:'1日の勉強可能時間',
-problem:'いちばん困っていること',
+
+weak:
+'苦手教科（「、」またはカンマ区切り）',
+
+daily:
+'1日の勉強可能時間',
+
+problem:
+'いちばん困っていること',
+
 save:'保存する',
 
-resultsSub:'結果を記録して、伸ばすべきところを見つけよう。',
+resultsSub:
+'結果を記録して、伸ばすべきところを見つけよう。',
+
 addResult:'テスト結果を追加',
 testName:'テスト名',
 date:'日付',
 dev:'偏差値',
-saveResult:'結果を保存',
-recentResults:'最近の結果',
 
-parentSub:'保護者には学習の進捗だけが共有され、AIチャット内容は共有されません。',
+saveResult:'結果を保存',
+
+recentResults:
+'最近の結果',
+
+parentSub:
+'保護者には学習の進捗だけが共有され、AIチャット内容は共有されません。',
+
 invite:'保護者を招待',
 parentName:'保護者の名前',
 parentEmail:'保護者のメールアドレス',
@@ -1580,42 +1570,50 @@ shared:'共有中の保護者'
    HELPERS
    ================================================== */
 
-function t(k){
+function t(key){
 
-return (
-I[lang] &&
-I[lang][k]
-) || I.en[k] || k;
-
+  return (
+    (I[lang] && I[lang][key]) ||
+    I.en[key] ||
+    key
+  );
 }
 
 
-function esc(x){
+function esc(value){
 
-return String(x ?? '')
-.replace(/[&<>"']/g,c => ({
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-'"':'&quot;',
-"'":'&#039;'
-}[c]));
+  return String(
+    value ?? ''
+  ).replace(
+    /[&<>"']/g,
+    function(c){
 
+      return {
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#039;'
+      }[c];
+
+    }
+  );
 }
 
-
-/* ==================================================
-   TOKEN
-   ================================================== */
 
 function token(){
 
-return (
-localStorage.getItem('tempoToken') ||
-localStorage.getItem('examToken') ||
-''
-);
+  return (
+    localStorage.getItem(
+      'tempoToken'
+    ) ||
 
+    localStorage.getItem(
+      'examToken'
+    ) ||
+
+    ''
+  );
 }
 
 
@@ -1623,115 +1621,89 @@ localStorage.getItem('examToken') ||
    API
    ================================================== */
 
-async function api(action,data={}){
-
-const currentToken = token();
-
-const publicActions = [
-'login',
-'createUser',
-'register'
-];
-
-if(
-!currentToken &&
-!publicActions.includes(action)
+async function api(
+  action,
+  data = {}
 ){
 
-location.href='index.html';
+  if(!API_URL){
+    throw new Error(
+      'API URL is missing.'
+    );
+  }
 
-throw new Error('UNAUTHORIZED');
+  let response;
 
-}
+  try{
 
+    response =
+      await fetch(
+        API_URL,
+        {
+          method:'POST',
 
-const payload = {
+          headers:{
+            'Content-Type':
+              'text/plain;charset=utf-8'
+          },
 
-action,
+          body:
+            JSON.stringify({
+              action,
+              ...data
+            })
+        }
+      );
 
-...data,
+  }catch(error){
 
-token:
-data.token ||
-currentToken
+    console.error(
+      'API connection error:',
+      error
+    );
 
-};
-
-
-let response;
-
-
-try{
-
-response = await fetch(
-API_URL,
-{
-method:'POST',
-headers:{
-'Content-Type':
-'text/plain;charset=utf-8'
-},
-body:JSON.stringify(payload)
-}
-);
-
-}catch(e){
-
-throw new Error(
-lang==='ja'
-?'サーバーに接続できませんでした。'
-:'Could not connect to the server.'
-);
-
-}
+    throw new Error(
+      lang === 'ja'
+        ? 'サーバーに接続できませんでした。'
+        : 'Could not connect to the server.'
+    );
+  }
 
 
-let result;
+  let result;
+
+  try{
+
+    result =
+      await response.json();
+
+  }catch(error){
+
+    console.error(
+      'Invalid API response:',
+      error
+    );
+
+    throw new Error(
+      lang === 'ja'
+        ? 'サーバーの応答が正しくありません。'
+        : 'Invalid server response.'
+    );
+  }
 
 
-try{
+  if(
+    !result.success
+  ){
 
-result =
-await response.json();
-
-}catch(e){
-
-throw new Error(
-lang==='ja'
-?'サーバーの応答が正しくありません。'
-:'Invalid server response.'
-);
-
-}
+    throw new Error(
+      result.error ||
+      'BACKEND_ERROR'
+    );
+  }
 
 
-if(!result.success){
-
-if(
-result.error === 'UNAUTHORIZED' ||
-result.error === 'INVALID_TOKEN'
-){
-
-localStorage.removeItem('tempoToken');
-localStorage.removeItem('examToken');
-
-location.href='index.html';
-
-throw new Error('UNAUTHORIZED');
-
-}
-
-
-throw new Error(
-result.error ||
-'BACKEND_ERROR'
-);
-
-}
-
-
-return result;
-
+  return result;
 }
 
 
@@ -1740,21 +1712,28 @@ return result;
    ================================================== */
 
 const toastEl =
-document.getElementById('toast');
+document.getElementById(
+  'toast'
+);
 
 
 function toast(message){
 
-toastEl.textContent =
-message;
+  toastEl.textContent =
+    message;
 
-toastEl.classList.add('show');
+  toastEl.classList.add(
+    'show'
+  );
 
-setTimeout(
-() => toastEl.classList.remove('show'),
-2600
-);
-
+  setTimeout(
+    function(){
+      toastEl.classList.remove(
+        'show'
+      );
+    },
+    2600
+  );
 }
 
 
@@ -1764,90 +1743,110 @@ setTimeout(
 
 function applyLang(){
 
-document.documentElement.lang =
-lang;
+  document.documentElement.lang =
+    lang;
 
-language.value =
-lang;
-
-
-document
-.querySelectorAll('[data-t]')
-.forEach(e => {
-
-e.textContent =
-t(e.dataset.t);
-
-});
+  language.value =
+    lang;
 
 
-document
-.querySelectorAll('[data-ph]')
-.forEach(e => {
+  document
+    .querySelectorAll('[data-t]')
+    .forEach(
+      element => {
 
-e.placeholder =
-t(e.dataset.ph);
+        element.textContent =
+          t(
+            element.dataset.t
+          );
 
-});
-
-
-const name =
-localStorage.getItem('tempoDisplayName') ||
-localStorage.getItem('examDisplayName') ||
-localStorage.getItem('tempoUsername') ||
-'Tempo';
+      }
+    );
 
 
-hello.textContent =
-lang==='ja'
-? 'こんにちは、'+name+'！'
-: 'Hello, '+name+'!';
+  document
+    .querySelectorAll('[data-ph]')
+    .forEach(
+      element => {
+
+        element.placeholder =
+          t(
+            element.dataset.ph
+          );
+
+      }
+    );
 
 
-tagline.textContent =
-lang==='ja'
-? 'あなたの学習状況をひとつに。'
-: 'Your study progress, all in one place.';
+  const name =
+    localStorage.getItem(
+      'tempoDisplayName'
+    ) ||
+
+    localStorage.getItem(
+      'examDisplayName'
+    ) ||
+
+    localStorage.getItem(
+      'tempoUsername'
+    ) ||
+
+    'Tempo';
 
 
-avatar.textContent =
-name.charAt(0).toUpperCase();
+  hello.textContent =
+    lang === 'ja'
+      ? 'こんにちは、' +
+        name +
+        '！'
+      : 'Hello, ' +
+        name +
+        '!';
 
+
+  tagline.textContent =
+    lang === 'ja'
+      ? 'あなたの学習状況をひとつに。'
+      : 'Your study progress, all in one place.';
+
+
+  avatar.textContent =
+    name.charAt(0).toUpperCase();
 }
 
 
-async function changeLanguage(v){
-
-lang=v;
-
-localStorage.setItem(
-'tempoLanguage',
-lang
-);
-
-applyLang();
-
-try{
-
-await api(
-'setLanguage',
-{
-language:lang
-}
-);
-
-}catch(e){
-
-if(
-e.message !== 'UNAUTHORIZED'
+async function changeLanguage(
+  value
 ){
 
-toast(e.message);
+  lang =
+    value === 'ja'
+      ? 'ja'
+      : 'en';
 
-}
+  localStorage.setItem(
+    'tempoLanguage',
+    lang
+  );
 
-}
+  applyLang();
 
+  try{
+
+    await api(
+      'setLanguage',
+      {
+        token:token(),
+        language:lang
+      }
+    );
+
+  }catch(error){
+
+    toast(
+      error.message
+    );
+  }
 }
 
 
@@ -1857,102 +1856,136 @@ toast(e.message);
 
 function show(view){
 
-document
-.querySelectorAll('.view')
-.forEach(x =>
-x.classList.toggle(
-'active',
-x.id===view
-)
-);
+  document
+    .querySelectorAll('.view')
+    .forEach(
+      element =>
+        element.classList.toggle(
+          'active',
+          element.id === view
+        )
+    );
 
 
-document
-.querySelectorAll('.nav button[data-v]')
-.forEach(x =>
-x.classList.toggle(
-'active',
-x.dataset.v===view
-)
-);
+  document
+    .querySelectorAll(
+      '.nav button[data-v]'
+    )
+    .forEach(
+      element =>
+        element.classList.toggle(
+          'active',
+          element.dataset.v === view
+        )
+    );
 
 
-if(view==='results')
-loadResults();
+  if(
+    view === 'results'
+  ){
+    loadResults();
+  }
 
-if(view==='parents')
-loadShares();
 
+  if(
+    view === 'parents'
+  ){
+    loadShares();
+  }
 }
 
 
+document
+  .querySelectorAll(
+    '.nav button[data-v]'
+  )
+  .forEach(
+    button => {
+
+      button.onclick =
+        () => show(
+          button.dataset.v
+        );
+
+    }
+  );
+
+
 /* ==================================================
-   HISTORY
+   CHAT HISTORY
    ================================================== */
 
 function hist(key){
 
-try{
+  try{
 
-return JSON.parse(
-localStorage.getItem(
-'tempo_'+key+'_history'
-) || '[]'
-).slice(-10);
+    return JSON.parse(
+      localStorage.getItem(
+        'tempo_' +
+        key +
+        '_history'
+      ) || '[]'
+    ).slice(-10);
 
-}catch(e){
+  }catch(error){
 
-return [];
+    return [];
 
-}
-
+  }
 }
 
 
 function addHist(
-key,
-role,
-content
+  key,
+  role,
+  content
 ){
 
-let h =
-hist(key);
+  const history =
+    hist(key);
 
-h.push({
-role,
-content
-});
+  history.push({
+    role,
+    content
+  });
 
-localStorage.setItem(
-'tempo_'+key+'_history',
-JSON.stringify(
-h.slice(-12)
-)
-);
+  localStorage.setItem(
+    'tempo_' +
+    key +
+    '_history',
 
+    JSON.stringify(
+      history.slice(-12)
+    )
+  );
 }
 
 
-/* ==================================================
-   CHAT
-   ================================================== */
-
 function addMsg(
-box,
-kind,
-text
+  box,
+  type,
+  text
 ){
 
-box.insertAdjacentHTML(
-'beforeend',
-'<div class="msg '+kind+'">'+
-esc(text)+
-'</div>'
-);
+  const div =
+    document.createElement(
+      'div'
+    );
 
-box.scrollTop =
-box.scrollHeight;
+  div.className =
+    'msg ' + type;
 
+  div.textContent =
+    text;
+
+  box.appendChild(
+    div
+  );
+
+  box.scrollTop =
+    box.scrollHeight;
+
+  return div;
 }
 
 
@@ -1962,279 +1995,373 @@ box.scrollHeight;
 
 async function loadDashboard(){
 
-try{
+  try{
 
-const d =
-await api('getDashboard');
+    const data =
+      await api(
+        'getDashboard',
+        {
+          token:token()
+        }
+      );
 
-const p =
-d.profile || {};
 
+    const profile =
+      data.profile || {};
+
 
-days.textContent =
-d.daysUntilExam == null
-? '—'
-: d.daysUntilExam +
-(
-lang==='ja'
-? '日'
-: ' days'
-);
+    days.textContent =
+      data.daysUntilExam == null
+        ? '—'
+        : data.daysUntilExam +
+          (
+            lang === 'ja'
+              ? '日'
+              : ' days'
+          );
 
 
-schoolLabel.textContent =
-p.firstChoice || '—';
+    schoolLabel.textContent =
+      profile.firstChoice ||
+      '—';
 
 
-current.textContent =
-p.currentDev || '—';
+    current.textContent =
+      profile.currentDev ||
+      '—';
 
 
-gap.textContent =
-p.targetDev
-? (
-lang==='ja'
-? '目標まであと '
-: 'Target gap: '
-) +
-Math.max(
-0,
-p.targetDev -
-(p.currentDev || 0)
-)
-: '';
+    if(
+      profile.targetDev
+    ){
 
+      const difference =
+        Math.max(
+          0,
+          profile.targetDev -
+          (
+            profile.currentDev ||
+            0
+          )
+        );
 
-const hours =
-(d.weekMinutes || 0) / 60;
+      gap.textContent =
+        lang === 'ja'
+          ? '目標まであと ' +
+            difference
+          : 'Target gap: ' +
+            difference;
 
-week.textContent =
-hours.toFixed(1)+'h';
+    }else{
 
+      gap.textContent =
+        '';
 
-weekTarget.textContent =
-p.weeklyHours
-? (
-lang==='ja'
-? '目標 '
-: 'Target '
-) +
-p.weeklyHours+'h'
-: '';
+    }
 
 
-const taskList =
-d.tasks || [];
+    week.textContent =
+      (
+        Math.round(
+          (
+            data.weekMinutes ||
+            0
+          ) / 6
+        ) / 10
+      ) + 'h';
 
 
-const done =
-taskList.filter(
-x => x.completed
-).length;
+    weekTarget.textContent =
+      profile.weeklyHours
+        ? (
+            lang === 'ja'
+              ? '目標 '
+              : 'Target '
+          ) +
+          profile.weeklyHours +
+          'h'
+        : '';
 
 
-tasksDone.textContent =
-done+'/'+taskList.length;
+    const tasks =
+      data.tasks || [];
 
 
-taskSub.textContent =
-done
-? (
-lang==='ja'
-? 'よくできています！'
-: 'Keep going!'
-)
-: '';
+    const completed =
+      tasks.filter(
+        task =>
+          task.completed
+      ).length;
 
 
-const weak =
-p.weakSubjects || [];
+    tasksDone.textContent =
+      completed +
+      '/' +
+      tasks.length;
 
 
-if(weak.length){
-
-planTitle.textContent =
-lang==='ja'
-? weak.join('・')+'を優先しよう'
-: 'Focus on '+weak.join(' & ');
-
-
-planWhy.textContent =
-lang==='ja'
-? '苦手教科と、利用できる時間に合わせて学習を組み立てます。'
-: 'Tempo will use your weak subjects and available time.';
-
-
-planTasks.innerHTML =
-weak.slice(0,3)
-.map((subject,i) => {
-
-const mins =
-i===0 ? 30 : 25;
-
-return `
-<div class="task">
-<span class="time">
-${mins}${lang==='ja'?'分':'m'}
-</span>
-
-<i class="dot"></i>
-
-${esc(subject)}
-${lang==='ja'
-?' 基礎復習'
-:' foundation review'}
-</div>
-`;
-
-})
-.join('');
-
-
-planTotal.textContent =
-p.dailyHours
-? (
-lang==='ja'
-? '約'
-: 'About '
-) +
-p.dailyHours +
-(
-lang==='ja'
-? '時間'
-: ' hours'
-)
-: '';
-
-progress.innerHTML =
-weak.map((subject,i)=>{
-
-const percentage =
-Math.min(
-100,
-25+(i*12)
-);
-
-return `
-<div class="progress">
-
-<div class="prolabel">
-
-<span>
-${esc(subject)}
-</span>
-
-<span>
-${percentage}%
-</span>
-
-</div>
-
-<div class="bar">
-
-<i style="width:${percentage}%"></i>
-
-</div>
-
-</div>
-`;
-
-}).join('');
-
-
-}else{
-
-planTitle.textContent =
-lang==='ja'
-? 'プロフィールを完成させよう'
-: 'Complete your profile';
-
-
-planWhy.textContent =
-lang==='ja'
-? '目標と苦手教科を入力すると、よりよい提案ができます。'
-: 'Add goals and weak subjects for tailored advice.';
-
-
-planTasks.innerHTML =
-`
-<div class="task">
-${lang==='ja'
-?'受験プロフィールから始めよう。'
-:'Start with your exam profile.'}
-</div>
-`;
-
-
-progress.innerHTML =
-`
-<p class="label">
-${lang==='ja'
-?'苦手教科を登録すると表示されます。'
-:'Add weak subjects to see focus areas.'}
-</p>
-`;
-
-}
-
-
-const tests =
-d.tests || [];
-
-
-upcoming.innerHTML =
-tests.length
-? tests
-.slice(0,5)
-.map(x=>`
-
-<div class="event">
-
-<div class="date">
-${esc(
-(x.date || '')
-.slice(5,10) || '—'
-)}
-</div>
-
-<div>
-
-<b>
-${esc(x.title)}
-</b>
-
-<small>
-${esc(x.subject || '')}
-</small>
-
-</div>
-
-</div>
-
-`)
-.join('')
-:
-`
-<p class="label">
-${lang==='ja'
-?'予定はまだありません。'
-:'No upcoming tests.'}
-</p>
-`;
-
-
-}catch(e){
-
-if(
-e.message !== 'UNAUTHORIZED'
-){
-
-toast(e.message);
-
-}
-
-}
-
+    taskSub.textContent =
+      completed
+        ? (
+            lang === 'ja'
+              ? 'よくできています！'
+              : 'Keep going!'
+          )
+        : '';
+
+
+    const weak =
+      profile.weakSubjects ||
+      [];
+
+
+    if(
+      weak.length
+    ){
+
+      planTitle.textContent =
+        lang === 'ja'
+          ? weak.join('・') +
+            'を優先しよう'
+          : 'Focus on ' +
+            weak.join(' & ');
+
+
+      planWhy.textContent =
+        lang === 'ja'
+          ? '苦手教科と、利用できる時間に合わせて学習を組み立てます。'
+          : 'Tempo will use your weak subjects and available time.';
+
+    }else{
+
+      planTitle.textContent =
+        lang === 'ja'
+          ? 'プロフィールを完成させよう'
+          : 'Complete your profile';
+
+
+      planWhy.textContent =
+        lang === 'ja'
+          ? '目標と苦手教科を入力すると、よりよい提案ができます。'
+          : 'Add goals and weak subjects for tailored advice.';
+    }
+
+
+    planTasks.innerHTML =
+      weak
+        .slice(0,3)
+        .map(
+          function(subject,index){
+
+            const minutes =
+              index === 0
+                ? 30
+                : 25;
+
+            return `
+              <div class="task">
+                <span class="time">
+                  ${minutes}${lang === 'ja' ? '分' : 'm'}
+                </span>
+
+                <i class="dot"></i>
+
+                ${esc(subject)}
+
+                ${
+                  lang === 'ja'
+                    ? ' 基礎復習'
+                    : ' foundation review'
+                }
+              </div>
+            `;
+
+          }
+        )
+        .join('');
+
+
+    if(
+      !planTasks.innerHTML
+    ){
+
+      planTasks.innerHTML =
+        `
+        <div class="task">
+          ${
+            lang === 'ja'
+              ? '受験プロフィールから始めよう。'
+              : 'Start with your exam profile.'
+          }
+        </div>
+        `;
+    }
+
+
+    const hours =
+      Number(
+        profile.dailyHours ||
+        0
+      );
+
+
+    planTotal.textContent =
+      hours
+        ? (
+            lang === 'ja'
+              ? '約'
+              : 'About '
+          ) +
+          hours +
+          (
+            lang === 'ja'
+              ? '時間'
+              : ' hours'
+          )
+        : '';
+
+
+    if(
+      weak.length
+    ){
+
+      progress.innerHTML =
+        weak
+          .map(
+            function(subject,index){
+
+              const percent =
+                Math.min(
+                  100,
+                  25 +
+                  (
+                    (index + 1) *
+                    12
+                  )
+                );
+
+              return `
+                <div class="progress">
+
+                  <div class="prolabel">
+
+                    <span>
+                      ${esc(subject)}
+                    </span>
+
+                    <span>
+                      ${percent}%
+                    </span>
+
+                  </div>
+
+                  <div class="bar">
+
+                    <i
+                      style="width:${percent}%"
+                    ></i>
+
+                  </div>
+
+                </div>
+              `;
+
+            }
+          )
+          .join('');
+
+    }else{
+
+      progress.innerHTML =
+        `
+        <p class="label">
+          ${
+            lang === 'ja'
+              ? '苦手教科を登録すると表示されます。'
+              : 'Add weak subjects to see focus areas.'
+          }
+        </p>
+        `;
+    }
+
+
+    const tests =
+      data.tests || [];
+
+
+    upcoming.innerHTML =
+      tests.length
+        ? tests
+            .slice(0,5)
+            .map(
+              test => `
+                <div class="event">
+
+                  <div class="date">
+                    ${esc(
+                      String(
+                        test.date ||
+                        ''
+                      ).slice(5,10) ||
+                      '—'
+                    )}
+                  </div>
+
+                  <div>
+
+                    <b>
+                      ${esc(
+                        test.title
+                      )}
+                    </b>
+
+                    <small>
+                      ${esc(
+                        test.subject ||
+                        ''
+                      )}
+                    </small>
+
+                  </div>
+
+                </div>
+              `
+            )
+            .join('')
+
+        : `
+          <p class="label">
+            ${
+              lang === 'ja'
+                ? '予定はまだありません。'
+                : 'No upcoming tests.'
+            }
+          </p>
+        `;
+
+
+  }catch(error){
+
+    console.error(
+      'Dashboard error:',
+      error
+    );
+
+
+    if(
+      error.message ===
+      'UNAUTHORIZED'
+    ){
+
+      logout();
+      return;
+    }
+
+
+    toast(
+      error.message
+    );
+  }
 }
 
 
@@ -2244,374 +2371,431 @@ toast(e.message);
 
 async function loadProfile(){
 
-try{
+  try{
 
-const r =
-await api('getExamProfile');
+    const result =
+      await api(
+        'getExamProfile',
+        {
+          token:token()
+        }
+      );
 
-const p =
-r.profile;
 
-if(!p)
-return;
+    const profile =
+      result.profile;
 
-grade.value =
-p.grade || '';
 
-firstChoice.value =
-p.firstChoice || '';
+    if(!profile){
+      return;
+    }
 
-examDate.value =
-(p.examDate || '')
-.slice(0,10);
 
-weakSubjects.value =
-(p.weakSubjects || [])
-.join(
-lang==='ja'
-? '、'
-: ', '
-);
+    grade.value =
+      profile.grade || '';
 
-currentDev.value =
-p.currentDev || '';
 
-targetDev.value =
-p.targetDev || '';
+    firstChoice.value =
+      profile.firstChoice || '';
 
-dailyHours.value =
-p.dailyHours || '';
 
-biggestProblem.value =
-p.biggestProblem || '';
+    examDate.value =
+      (
+        profile.examDate ||
+        ''
+      ).slice(0,10);
 
-}catch(e){
 
-if(
-e.message !== 'UNAUTHORIZED'
-){
+    weakSubjects.value =
+      (
+        profile.weakSubjects ||
+        []
+      ).join(
+        lang === 'ja'
+          ? '、'
+          : ', '
+      );
 
-console.error(e);
 
-}
+    currentDev.value =
+      profile.currentDev || '';
 
-}
 
+    targetDev.value =
+      profile.targetDev || '';
+
+
+    dailyHours.value =
+      profile.dailyHours || '';
+
+
+    biggestProblem.value =
+      profile.biggestProblem || '';
+
+
+  }catch(error){
+
+    console.error(
+      'Profile load error:',
+      error
+    );
+  }
 }
 
 
 async function saveProfile(){
 
-try{
+  try{
 
-const weak =
-weakSubjects.value
-.split(/[、,]/)
-.map(x=>x.trim())
-.filter(Boolean);
-
-
-await api(
-'upsertExamProfile',
-{
-profile:{
-
-grade:
-grade.value,
-
-firstChoice:
-firstChoice.value,
-
-examDate:
-examDate.value,
-
-currentDev:
-Number(currentDev.value) || 0,
-
-targetDev:
-Number(targetDev.value) || 0,
-
-dailyHours:
-Number(dailyHours.value) || 0,
-
-weakSubjects:
-weak,
-
-biggestProblem:
-biggestProblem.value,
-
-candidateSchools:
-firstChoice.value
-?[firstChoice.value]
-:[]
-
-}
-}
-);
+    const weak =
+      weakSubjects.value
+        .split(/[、,]/)
+        .map(
+          value =>
+            value.trim()
+        )
+        .filter(Boolean);
 
 
-toast(
-lang==='ja'
-? 'プロフィールを保存しました。'
-: 'Profile saved.'
-);
+    await api(
+      'upsertExamProfile',
+      {
+        token:token(),
+
+        profile:{
+          grade:
+            grade.value,
+
+          firstChoice:
+            firstChoice.value,
+
+          examDate:
+            examDate.value,
+
+          currentDev:
+            Number(
+              currentDev.value
+            ) || 0,
+
+          targetDev:
+            Number(
+              targetDev.value
+            ) || 0,
+
+          dailyHours:
+            Number(
+              dailyHours.value
+            ) || 0,
+
+          weakSubjects:
+            weak,
+
+          biggestProblem:
+            biggestProblem.value,
+
+          candidateSchools:
+            firstChoice.value
+              ? [
+                  firstChoice.value
+                ]
+              : []
+        }
+      }
+    );
 
 
-await loadDashboard();
+    toast(
+      lang === 'ja'
+        ? 'プロフィールを保存しました。'
+        : 'Profile saved.'
+    );
 
-}catch(e){
 
-if(
-e.message !== 'UNAUTHORIZED'
-){
+    await loadDashboard();
 
-toast(e.message);
 
-}
+  }catch(error){
 
-}
-
+    toast(
+      error.message
+    );
+  }
 }
 
 
 /* ==================================================
-   COACH
+   CHAT INTRO
    ================================================== */
 
 function coachIntro(){
 
-if(
-!coachMessages.children.length
-){
+  if(
+    !coachMessages.children.length
+  ){
 
-addMsg(
-coachMessages,
-'ai',
+    addMsg(
+      coachMessages,
+      'ai',
 
-lang==='ja'
-? 'こんにちは。今日使える時間や、困っている教科を教えてね。'
-: 'Hi! Tell me how much time you have today or what subject is difficult.'
-);
-
-}
-
-}
+      lang === 'ja'
+        ? 'こんにちは。今日使える時間や、困っている教科を教えてね。'
+        : 'Hi! Tell me how much time you have today or what subject is difficult.'
+    );
+  }
 
 
-async function sendCoach(){
+  if(
+    !hwMessages.children.length
+  ){
 
-const input =
-document.getElementById('coachInput');
+    addMsg(
+      hwMessages,
+      'ai',
 
-const button =
-document.getElementById('coachSend');
-
-const question =
-input.value.trim();
-
-
-if(!question)
-return;
-
-
-addMsg(
-coachMessages,
-'user',
-question
-);
-
-
-input.value='';
-
-button.disabled=true;
-
-addMsg(
-coachMessages,
-'ai',
-lang==='ja'
-? '考え中です…'
-: 'Thinking…'
-);
-
-
-const loading =
-coachMessages.lastElementChild;
-
-
-try{
-
-const response =
-await api(
-'examCoach',
-{
-message:question,
-history:hist('coach')
-}
-);
-
-
-loading.remove();
-
-
-addMsg(
-coachMessages,
-'ai',
-response.message
-);
-
-
-addHist(
-'coach',
-'user',
-question
-);
-
-
-addHist(
-'coach',
-'assistant',
-response.message
-);
-
-
-}catch(e){
-
-loading.remove();
-
-
-addMsg(
-coachMessages,
-'ai',
-e.message === 'AI_REQUEST_FAILED'
-? (
-lang==='ja'
-? 'AIへの接続に失敗しました。Gemini APIキーを確認してください。'
-: 'The AI request failed. Check your Gemini API key.'
-)
-: e.message
-);
-
-}finally{
-
-button.disabled=false;
-
-}
-
+      lang === 'ja'
+        ? '問題文と自分で考えたことを送ってね。答えではなくヒントを出すよ。'
+        : 'Send the question and what you tried. I will give a hint, not an answer to copy.'
+    );
+  }
 }
 
 
 /* ==================================================
-   HOMEWORK
+   AI COACH
+   ================================================== */
+
+async function sendCoach(){
+
+  const question =
+    coachInput.value.trim();
+
+
+  if(!question){
+    return;
+  }
+
+
+  addMsg(
+    coachMessages,
+    'user',
+    question
+  );
+
+
+  coachInput.value =
+    '';
+
+
+  const thinking =
+    addMsg(
+      coachMessages,
+      'ai',
+      lang === 'ja'
+        ? '考え中です…'
+        : 'Thinking…'
+    );
+
+
+  coachSendButton.disabled =
+    true;
+
+
+  try{
+
+    const result =
+      await api(
+        'examCoach',
+        {
+          token:token(),
+
+          message:
+            question,
+
+          history:
+            hist('coach')
+        }
+      );
+
+
+    thinking.remove();
+
+
+    const answer =
+      result.message ||
+      (
+        lang === 'ja'
+          ? '回答を取得できませんでした。'
+          : 'I could not get a response.'
+      );
+
+
+    addMsg(
+      coachMessages,
+      'ai',
+      answer
+    );
+
+
+    addHist(
+      'coach',
+      'user',
+      question
+    );
+
+
+    addHist(
+      'coach',
+      'assistant',
+      answer
+    );
+
+
+  }catch(error){
+
+    thinking.remove();
+
+
+    addMsg(
+      coachMessages,
+      'ai',
+      (
+        lang === 'ja'
+          ? 'エラー：'
+          : 'Error: '
+      ) +
+      error.message
+    );
+
+
+    console.error(
+      'Coach error:',
+      error
+    );
+
+
+  }finally{
+
+    coachSendButton.disabled =
+      false;
+  }
+}
+
+
+/* ==================================================
+   HOMEWORK HELPER
    ================================================== */
 
 async function sendHomework(){
 
-const input =
-document.getElementById('hwQuestion');
-
-const button =
-document.getElementById('hwSend');
-
-const question =
-input.value.trim();
+  const question =
+    hwQuestion.value.trim();
 
 
-if(!question)
-return;
+  if(!question){
+    return;
+  }
 
 
-addMsg(
-hwMessages,
-'user',
-question
-);
+  addMsg(
+    hwMessages,
+    'user',
+    question
+  );
 
 
-input.value='';
-
-button.disabled=true;
-
-
-addMsg(
-hwMessages,
-'ai',
-lang==='ja'
-? '考え中です…'
-: 'Thinking…'
-);
+  hwQuestion.value =
+    '';
 
 
-const loading =
-hwMessages.lastElementChild;
+  const thinking =
+    addMsg(
+      hwMessages,
+      'ai',
+      lang === 'ja'
+        ? '考え中です…'
+        : 'Thinking…'
+    );
 
 
-try{
+  try{
 
-const response =
-await api(
-'homeworkHelper',
-{
-question,
-subject:
-hwSubject.value,
+    const result =
+      await api(
+        'homeworkHelper',
+        {
+          token:token(),
 
-grade:
-grade.value ||
-'Middle school',
+          question:
+            question,
 
-history:
-hist('homework')
-}
-);
+          subject:
+            hwSubject.value,
 
+          grade:
+            grade.value ||
+            'Middle school',
 
-loading.remove();
-
-
-addMsg(
-hwMessages,
-'ai',
-response.message
-);
+          history:
+            hist('homework')
+        }
+      );
 
 
-addHist(
-'homework',
-'user',
-question
-);
+    thinking.remove();
 
 
-addHist(
-'homework',
-'assistant',
-response.message
-);
+    const answer =
+      result.message ||
+      (
+        lang === 'ja'
+          ? '回答を取得できませんでした。'
+          : 'I could not get a response.'
+      );
 
 
-}catch(e){
+    addMsg(
+      hwMessages,
+      'ai',
+      answer
+    );
 
-loading.remove();
+
+    addHist(
+      'homework',
+      'user',
+      question
+    );
 
 
-addMsg(
-hwMessages,
-'ai',
-e.message === 'AI_REQUEST_FAILED'
-? (
-lang==='ja'
-? 'AIへの接続に失敗しました。Gemini APIキーを確認してください。'
-: 'The AI request failed. Check your Gemini API key.'
-)
-: e.message
-);
+    addHist(
+      'homework',
+      'assistant',
+      answer
+    );
 
-}finally{
 
-button.disabled=false;
+  }catch(error){
 
-}
+    thinking.remove();
 
+
+    addMsg(
+      hwMessages,
+      'ai',
+      (
+        lang === 'ja'
+          ? 'エラー：'
+          : 'Error: '
+      ) +
+      error.message
+    );
+
+
+    console.error(
+      'Homework error:',
+      error
+    );
+  }
 }
 
 
@@ -2621,307 +2805,335 @@ button.disabled=false;
 
 async function saveResult(){
 
-try{
+  try{
 
-const scores={
+    const scores = {
 
-english:
-Number(sEnglish.value)||0,
+      english:
+        Number(
+          sEnglish.value
+        ) || 0,
 
-math:
-Number(sMath.value)||0,
+      math:
+        Number(
+          sMath.value
+        ) || 0,
 
-japanese:
-Number(sJapanese.value)||0,
+      japanese:
+        Number(
+          sJapanese.value
+        ) || 0,
 
-science:
-Number(sScience.value)||0,
+      science:
+        Number(
+          sScience.value
+        ) || 0,
 
-social:
-Number(sSocial.value)||0
-
-};
-
-
-await api(
-'createExamResult',
-{
-result:{
-
-testName:
-testName.value,
-
-date:
-resultDate.value,
-
-scores,
-
-dev:
-Number(resultDev.value)||0
-
-}
-}
-);
+      social:
+        Number(
+          sSocial.value
+        ) || 0
+    };
 
 
-toast(
-lang==='ja'
-? '結果を保存しました。'
-: 'Result saved.'
-);
+    await api(
+      'createExamResult',
+      {
+        token:token(),
+
+        result:{
+
+          testName:
+            testName.value,
+
+          date:
+            resultDate.value,
+
+          scores:
+
+            scores,
+
+          dev:
+            Number(
+              resultDev.value
+            ) || 0
+        }
+      }
+    );
 
 
-await loadResults();
-await loadDashboard();
+    toast(
+      lang === 'ja'
+        ? '結果を保存しました。'
+        : 'Result saved.'
+    );
 
 
-}catch(e){
+    await loadResults();
+    await loadDashboard();
 
-if(
-e.message !== 'UNAUTHORIZED'
-){
 
-toast(e.message);
+  }catch(error){
 
-}
-
-}
-
+    toast(
+      error.message
+    );
+  }
 }
 
 
 async function loadResults(){
 
-try{
+  try{
 
-const r =
-await api('getExamResults');
-
-
-resultList.innerHTML =
-r.results.length
-? r.results
-.slice()
-.reverse()
-.map(x=>`
-
-<div class="row">
-
-<span>
-
-<b>
-${esc(
-x.testName || 'Test'
-)}
-</b>
-
-<br>
-
-<small>
-${esc(x.date || '')}
-</small>
-
-</span>
-
-<span>
-${
-lang==='ja'
-? '偏差値 '
-: 'Dev. '
-}
-${esc(x.dev || '—')}
-</span>
-
-</div>
-
-`)
-.join('')
-:
-`
-<p class="label">
-${lang==='ja'
-?'まだ結果がありません。'
-:'No results yet.'}
-</p>
-`;
+    const result =
+      await api(
+        'getExamResults',
+        {
+          token:token()
+        }
+      );
 
 
-}catch(e){
+    const results =
+      result.results || [];
 
-if(
-e.message !== 'UNAUTHORIZED'
-){
 
-toast(e.message);
+    resultList.innerHTML =
+      results.length
 
-}
+        ? results
+            .slice()
+            .reverse()
+            .map(
+              item => `
+                <div class="row">
 
-}
+                  <span>
 
+                    <b>
+                      ${esc(
+                        item.testName ||
+                        'Test'
+                      )}
+                    </b>
+
+                    <br>
+
+                    <small>
+                      ${esc(
+                        item.date ||
+                        ''
+                      )}
+                    </small>
+
+                  </span>
+
+                  <span>
+                    ${
+                      lang === 'ja'
+                        ? '偏差値 '
+                        : 'Dev. '
+                    }
+
+                    ${esc(
+                      item.dev ||
+                      '—'
+                    )}
+                  </span>
+
+                </div>
+              `
+            )
+            .join('')
+
+        : `
+          <p class="label">
+            ${
+              lang === 'ja'
+                ? 'まだ結果がありません。'
+                : 'No results yet.'
+            }
+          </p>
+        `;
+
+
+  }catch(error){
+
+    toast(
+      error.message
+    );
+  }
 }
 
 
 /* ==================================================
-   PARENTS
+   PARENT SHARING
    ================================================== */
 
 async function inviteParent(){
 
-try{
+  try{
 
-const r =
-await api(
-'createParentShare',
-{
-parentName:
-parentName.value,
+    const result =
+      await api(
+        'createParentShare',
+        {
+          token:token(),
 
-parentEmail:
-parentEmail.value
-}
-);
+          parentName:
+            parentName.value,
 
-
-inviteResult.style.display =
-'block';
+          parentEmail:
+            parentEmail.value
+        }
+      );
 
 
-inviteResult.innerHTML =
-(
-lang==='ja'
-? 'この招待トークンを保護者に安全な方法で送ってください：<br>'
-: 'Send this invitation token privately to your parent:<br>'
-) +
-
-'<b style="word-break:break-all">'+
-esc(r.accessToken)+
-'</b>';
+    inviteResult.style.display =
+      'block';
 
 
-await loadShares();
+    inviteResult.innerHTML =
+      (
+        lang === 'ja'
+          ? 'この招待トークンを保護者に安全な方法で送ってください：<br>'
+          : 'Send this invitation token privately to your parent:<br>'
+      ) +
+
+      '<b style="word-break:break-all">' +
+
+      esc(
+        result.accessToken
+      ) +
+
+      '</b>';
 
 
-}catch(e){
+    await loadShares();
 
-if(
-e.message !== 'UNAUTHORIZED'
-){
 
-toast(e.message);
+  }catch(error){
 
-}
-
-}
-
+    toast(
+      error.message
+    );
+  }
 }
 
 
 async function loadShares(){
 
-try{
+  try{
 
-const r =
-await api('getParentShares');
+    const result =
+      await api(
+        'getParentShares',
+        {
+          token:token()
+        }
+      );
 
 
-shareList.innerHTML =
-r.shares.length
-? r.shares.map(x=>`
+    const shares =
+      result.shares || [];
 
-<div class="share">
 
-<b>
-${esc(
-x.parentName ||
-x.parentEmail
-)}
-</b>
+    shareList.innerHTML =
+      shares.length
 
-<br>
+        ? shares
+            .map(
+              item => `
+                <div class="share">
 
-<small>
-${esc(x.parentEmail)}
- ·
-${esc(x.status)}
-</small>
+                  <b>
+                    ${esc(
+                      item.parentName ||
+                      item.parentEmail
+                    )}
+                  </b>
 
-<button
-class="link"
-style="color:var(--red);float:right"
-onclick="revokeShare('${esc(x.shareID)}')"
->
+                  <br>
 
-${
-lang==='ja'
-? '共有を停止'
-: 'Revoke'
+                  <small>
+                    ${esc(
+                      item.parentEmail
+                    )}
+                    ·
+                    ${esc(
+                      item.status
+                    )}
+                  </small>
+
+                  <button
+                    class="link"
+                    style="color:var(--red);float:right"
+                    onclick="revokeShare('${esc(item.shareID)}')"
+                  >
+                    ${
+                      lang === 'ja'
+                        ? '共有を停止'
+                        : 'Revoke'
+                    }
+                  </button>
+
+                </div>
+              `
+            )
+            .join('')
+
+        : `
+          <p class="label">
+            ${
+              lang === 'ja'
+                ? '共有中の保護者はいません。'
+                : 'No parents shared yet.'
+            }
+          </p>
+        `;
+
+
+  }catch(error){
+
+    toast(
+      error.message
+    );
+  }
 }
 
-</button>
 
-</div>
-
-`)
-.join('')
-:
-`
-<p class="label">
-${lang==='ja'
-?'共有中の保護者はいません。'
-:'No parents shared yet.'}
-</p>
-`;
-
-
-}catch(e){
-
-if(
-e.message !== 'UNAUTHORIZED'
+async function revokeShare(
+  shareId
 ){
 
-toast(e.message);
+  try{
 
-}
-
-}
-
-}
-
-
-async function revokeShare(id){
-
-try{
-
-await api(
-'revokeParentShare',
-{
-shareID:id
-}
-);
+    await api(
+      'revokeParentShare',
+      {
+        token:token(),
+        shareID:shareId
+      }
+    );
 
 
-toast(
-lang==='ja'
-? '共有を停止しました。'
-: 'Sharing revoked.'
-);
+    toast(
+      lang === 'ja'
+        ? '共有を停止しました。'
+        : 'Sharing revoked.'
+    );
 
 
-await loadShares();
+    await loadShares();
 
 
-}catch(e){
+  }catch(error){
 
-if(
-e.message !== 'UNAUTHORIZED'
-){
-
-toast(e.message);
-
-}
-
-}
-
+    toast(
+      error.message
+    );
+  }
 }
 
 
@@ -2931,127 +3143,105 @@ toast(e.message);
 
 async function logout(){
 
-const current =
-token();
+  try{
 
-try{
+    await api(
+      'logout',
+      {
+        token:token()
+      }
+    );
 
-if(current){
+  }catch(error){
 
-await api(
-'logout',
-{
-token:current
-}
-);
-
-}
-
-}catch(e){
-
-}
+    console.error(
+      'Logout error:',
+      error
+    );
+  }
 
 
-[
-'tempoToken',
-'examToken',
-'tempoUsername',
-'examUsername',
-'tempoDisplayName',
-'examDisplayName',
-'tempoEmail'
-]
-.forEach(
-x => localStorage.removeItem(x)
-);
+  [
+    'tempoToken',
+    'examToken',
+    'tempoUsername',
+    'examUsername',
+    'tempoDisplayName',
+    'examDisplayName',
+    'tempoEmail'
+  ].forEach(
+    key =>
+      localStorage.removeItem(
+        key
+      )
+  );
 
 
-location.href =
-'index.html';
-
+  location.href =
+    'index.html';
 }
 
 
 /* ==================================================
-   KEYBOARD
-   ================================================== */
-
-coachInput.addEventListener(
-'keydown',
-e=>{
-
-if(e.key==='Enter'){
-e.preventDefault();
-sendCoach();
-}
-
-}
-);
-
-
-/* ==================================================
-   INITIALIZATION
+   INITIALIZE
    ================================================== */
 
 (async function init(){
 
-const current =
-token();
+  if(!token()){
+
+    location.href =
+      'index.html';
+
+    return;
+  }
 
 
-if(!current){
+  applyLang();
 
-location.href='index.html';
-
-return;
-
-}
+  coachIntro();
 
 
-applyLang();
+  try{
 
-coachIntro();
-
-
-try{
-
-const r =
-await api('getLanguage');
-
-
-if(
-r.language &&
-r.language !== lang
-){
-
-lang =
-r.language;
-
-localStorage.setItem(
-'tempoLanguage',
-lang
-);
-
-applyLang();
-
-}
-
-}catch(e){
-
-if(
-e.message === 'UNAUTHORIZED'
-){
-
-return;
-
-}
-
-}
+    const result =
+      await api(
+        'getLanguage',
+        {
+          token:token()
+        }
+      );
 
 
-await loadProfile();
+    if(
+      result.language &&
+      result.language !== lang
+    ){
 
-await loadDashboard();
+      lang =
+        result.language;
+
+      localStorage.setItem(
+        'tempoLanguage',
+        lang
+      );
+
+      applyLang();
+
+    }
+
+  }catch(error){
+
+    console.error(
+      'Language load error:',
+      error
+    );
+  }
+
+
+  await loadProfile();
+
+  await loadDashboard();
 
 })();
 </script>
